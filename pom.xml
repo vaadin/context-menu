@@ -9,7 +9,7 @@
 	<name>Vaadin ContextMenu Root Project</name>
 
 	<modules>
-		<module>context-menu</module>
+		<module>context-menu-addon</module>
 		<module>context-menu-demo</module>
 	</modules>
 
