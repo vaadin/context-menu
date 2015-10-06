@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.example.contextmenu.menubar.Menu.Command;
+import com.vaadin.addon.contextmenu.Menu.Command;
 import com.vaadin.server.Resource;
 
 /**

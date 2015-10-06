@@ -1,28 +1,24 @@
-package com.vaadin.addon.contextmenu.demo;
 
-import javax.servlet.annotation.WebServlet;
 
-import com.example.contextmenu.menubar.ContextMenu;
-import com.example.contextmenu.menubar.MenuItem;
+import com.vaadin.addon.contextmenu.ContextMenu;
 import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @Theme("contextmenu")
+@Widgetset("com.vaadin.addon.contextmenu.demo.DemoWidgetSet")
 public class ContextmenuUI extends UI {
 
-	@WebServlet(value = "/*", asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class, widgetset = "com.example.contextmenu.widgetset.ContextmenuWidgetset")
-	public static class Servlet extends VaadinServlet {
-	}
+//	@WebServlet(value = "/*", asyncSupported = true)
+//	@VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class, widgetset = "com.vaadin.addon.contextmenu.widgetset.ContextmenuWidgetset")
+//	public static class Servlet extends VaadinServlet {
+//	}
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -47,13 +43,13 @@ public class ContextmenuUI extends UI {
 //		layout.addComponent(menuBar);
 		
 		ContextMenu contextMenu = new ContextMenu(button);
-		MenuItem item3 = contextMenu.addItem("root", e -> { Notification.show("root"); });
-		item3.addItem("nested", e -> Notification.show("nested"));
-		MenuItem item4 = contextMenu.addItem("root2", e-> Notification.show("root2"));
-		item4.addItem("nested", e -> Notification.show("nested"));
-		
-		button.addClickListener(e -> {
-			contextMenu.addItem("dynamically added item", a -> { Notification.show("click"); });
-		});
+//		MenuItem item3 = contextMenu.addItem("root", e -> { Notification.show("root"); });
+//		item3.addItem("nested", e -> Notification.show("nested"));
+//		MenuItem item4 = contextMenu.addItem("root2", e-> Notification.show("root2"));
+//		item4.addItem("nested", e -> Notification.show("nested"));
+//		
+//		button.addClickListener(e -> {
+//			contextMenu.addItem("dynamically added item", a -> { Notification.show("click"); });
+//		});
 	}	
 }

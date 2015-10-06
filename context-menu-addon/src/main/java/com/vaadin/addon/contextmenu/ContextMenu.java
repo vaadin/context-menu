@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.example.contextmenu.widgetset.client.ContextMenuClientRpc;
-import com.example.contextmenu.widgetset.client.ContextMenuServerRpc;
-import com.example.contextmenu.widgetset.client.MenuSharedState;
-import com.example.contextmenu.widgetset.client.MenuSharedState.MenuItemState;
+import com.vaadin.addon.contextmenu.widgetset.client.ContextMenuClientRpc;
+import com.vaadin.addon.contextmenu.widgetset.client.ContextMenuServerRpc;
+import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState;
+import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState.MenuItemState;
 import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.server.AbstractExtension;
@@ -65,7 +65,7 @@ public class ContextMenu extends AbstractExtension implements Menu {
     	if (items == null || items.size() == 0)
     		return null;
     	
-    	List<MenuItemState> state = new ArrayList<>();
+    	List<MenuItemState> state = new ArrayList<MenuItemState>();
     	
     	for (MenuItem item : items) {
     		MenuItemState menuItemState = new MenuItemState();

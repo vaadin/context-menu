@@ -2,7 +2,7 @@ package com.vaadin.addon.contextmenu;
 
 import java.util.List;
 
-import com.example.contextmenu.menubar.Menu.Command;
+import com.vaadin.addon.contextmenu.Menu.Command;
 import com.vaadin.server.Resource;
 
 public interface MenuItem {

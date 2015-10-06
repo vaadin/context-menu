@@ -3,12 +3,12 @@ package com.vaadin.addon.contextmenu.widgetset.client;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.example.contextmenu.menubar.ContextMenu;
-import com.example.contextmenu.widgetset.client.MenuSharedState.MenuItemState;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.Widget;
+import com.vaadin.addon.contextmenu.ContextMenu;
+import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState.MenuItemState;
 import com.vaadin.client.ServerConnector;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
