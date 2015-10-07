@@ -145,7 +145,9 @@ class MenuItemImpl implements Serializable, MenuItem {
 			itsChildren = new ArrayList<MenuItem>();
 		}
 
-		MenuItem newItem = new MenuItemImpl(this, caption, icon, command);
+		MenuItemImpl newItem = new MenuItemImpl(this, caption, icon, command);
+		
+		newItem.setSeparator(separator);
 
 		itsChildren.add(newItem);
 
