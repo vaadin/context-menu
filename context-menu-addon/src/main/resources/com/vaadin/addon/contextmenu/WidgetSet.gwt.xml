@@ -6,6 +6,6 @@
 	<inherits name="com.vaadin.DefaultWidgetSet" /> 
 
 	<!-- Widget styles in public -directory -->
-	<stylesheet src="context-menu2/styles.css"/>
+	<stylesheet src="context-menu/styles.css"/>
 
 </module>
