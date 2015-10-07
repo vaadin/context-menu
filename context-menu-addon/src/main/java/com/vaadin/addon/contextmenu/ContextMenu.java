@@ -12,6 +12,7 @@ import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Resource;
+import com.vaadin.server.ResourceReference;
 import com.vaadin.ui.AbstractComponent;
 
 @SuppressWarnings("serial")
@@ -53,8 +54,8 @@ public class ContextMenu extends AbstractExtension implements Menu {
          * Thus to be moved e.g. to the AbstractMenu.
          */
     	MenuSharedState menuSharedState = getState();
-    	menuSharedState.htmlContentAllowed = menu.isHtmlContentAllowed();
-    	menuSharedState.menuItems = convertItemsToState(menu.getItems());
+    	menuSharedState.htmlContentAllowed = isHtmlContentAllowed();
+    	menuSharedState.menuItems = convertItemsToState(getItems());
     }
     
     public void open(int x, int y) {
@@ -71,7 +72,14 @@ public class ContextMenu extends AbstractExtension implements Menu {
     		MenuItemState menuItemState = new MenuItemState();
     		menuItemState.id = item.getId();
     		menuItemState.text = item.getText();
-    		// TODO continue
+    		menuItemState.checkable = item.isCheckable();
+			menuItemState.checked = item.isChecked();
+			menuItemState.description = item.getDescription();
+			menuItemState.enabled = item.isEnabled();
+			menuItemState.separator = item.isSeparator();
+			menuItemState.icon = ResourceReference.create(
+	                item.getIcon(), this, "");
+			menuItemState.styleName = item.getStyleName();
     		
     		menuItemState.childItems = convertItemsToState(item.getChildren());
     		
