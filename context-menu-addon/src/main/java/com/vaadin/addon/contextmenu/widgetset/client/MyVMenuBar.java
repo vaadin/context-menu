@@ -344,4 +344,7 @@ public class MyVMenuBar extends VMenuBar {
 
     }
 
+    public boolean isPopupShowing() {
+    	return menuVisible;
+    }
 }

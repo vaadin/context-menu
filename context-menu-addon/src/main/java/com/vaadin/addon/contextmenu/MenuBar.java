@@ -63,7 +63,7 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
     protected MenuBarState getState(boolean markAsDirty) {
         return (MenuBarState) super.getState(markAsDirty);
     }
-
+    
     /** Paint (serialise) the component for the client. */
     @Override
     public void paintContent(PaintTarget target) throws PaintException {
@@ -430,11 +430,9 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
         return result;
     }
 
-    /*
-     * delegation methods 
-     */
+	/**** Delegates to AbstractMenu ****/
     
-    private Menu menu = new AbstractMenu();
+    private Menu menu = new AbstractMenu(this);
     
 	@Override
 	public MenuItem addItem(String caption, Command command) {
@@ -482,6 +480,8 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
 		return menu.isHtmlContentAllowed();
 	}
     
+	/**** End of deletates to AbstractMenu ****/
+
 //    public class MenuItem extends MenuItemImpl implements Serializable {
 //		public MenuItem(String caption, Resource icon, Command command) {
 //			super(caption, icon, command);

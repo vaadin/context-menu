@@ -10,9 +10,7 @@ public class VMenuItem extends CustomMenuItem {
 		Logger.getLogger("VMenuItem").info("VMenuItem constructor");
 	}
 	
-    public void setSeparator(boolean separator) {
-		Logger.getLogger("VMenuItem").info("set separator: "+separator);
-    	
+    public void setSeparator(boolean separator) {    	
         isSeparator = separator;
         updateStyleNames();
         if (!separator) {
