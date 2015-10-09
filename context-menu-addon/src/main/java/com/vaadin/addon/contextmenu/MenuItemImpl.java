@@ -33,8 +33,9 @@ class MenuItemImpl implements Serializable, MenuItem {
 	private boolean checkable = false;
 	private boolean checked = false;
 
-	public static void markAsDirty() {
-		// FIXME check if it can be removed at all, or find a way to call it when needed
+	private void markAsDirty() {
+		// FIXME we need to delegate this to the MenuBar or better convert the menubar to Vaadin 7 communication
+		// and remove this method
 	}
 
 	/**
@@ -59,15 +60,15 @@ class MenuItemImpl implements Serializable, MenuItem {
 		itsCommand = command;
 	}
 	
-	protected int getNextId() {
-		// FIXME is this good enough? maybe just random?
-		return UUID.randomUUID().hashCode();
-	}
-
 	public MenuItemImpl(MenuItem parent, String trim, Resource icon,
 			Command object) {
 		this(trim, icon, object);
 		setParent(parent);
+	}
+
+	protected int getNextId() {
+		// FIXME is this good enough? maybe just random?
+		return UUID.randomUUID().hashCode();
 	}
 
 	/*

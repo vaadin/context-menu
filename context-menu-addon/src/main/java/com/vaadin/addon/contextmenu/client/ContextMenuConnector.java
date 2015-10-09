@@ -1,21 +1,20 @@
-package com.vaadin.addon.contextmenu.widgetset.client;
+package com.vaadin.addon.contextmenu.client;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
+import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.vaadin.addon.contextmenu.ContextMenu;
-import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState.MenuItemState;
+import com.vaadin.addon.contextmenu.client.MenuSharedState.MenuItemState;
 import com.vaadin.client.ApplicationConnection;
 import com.vaadin.client.ServerConnector;
 import com.vaadin.client.WidgetUtil;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
-import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.client.ui.Icon;
 import com.vaadin.client.ui.VMenuBar;
 import com.vaadin.client.ui.VMenuBar.CustomMenuItem;
@@ -28,7 +27,7 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 
 	// TODO: make it so that we don't need this dummy root menu bar.
 	private MyVMenuBar dummyRootMenuBar;
-	private VMenuBar contextMenuWidget;
+	private MyVMenuBar contextMenuWidget;
 
 	@Override
 	public MenuSharedState getState() {
@@ -64,6 +63,28 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 			@Override
 			public void showContextMenu(int x, int y) {
 				showMenu(x, y);
+			}
+		});
+		
+		logger.info("Adding preview");
+		
+		Event.addNativePreviewHandler(new NativePreviewHandler() {
+			@Override
+			public void onPreviewNativeEvent(NativePreviewEvent event) {
+				logger.info("preview: " + contextMenuWidget.isPopupShowing());
+				
+				if (event.getTypeInt() == Event.ONKEYDOWN && contextMenuWidget.isPopupShowing()) {
+					logger.info("preview keydown and handle");
+					
+					boolean handled = contextMenuWidget.handleNavigation(event
+							.getNativeEvent().getKeyCode(), event
+							.getNativeEvent().getCtrlKey(), event
+							.getNativeEvent().getShiftKey());
+
+					if (handled) {
+						event.cancel();
+					}
+				}
 			}
 		});
 	}
@@ -162,8 +183,8 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 	protected void extend(ServerConnector target) {
 		Logger.getLogger("ContextMenuConnector").info("extend");
 
-		Widget widget = ((AbstractComponentConnector) target).getWidget();
-
+//		Widget widget = ((AbstractComponentConnector) target).getWidget();
+		
 		// widget.addDomHandler(new ContextMenuHandler() {
 		//
 		// @Override
@@ -175,21 +196,21 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 		// .getNativeEvent().getClientY());
 		// }
 		// }, ContextMenuEvent.getType());
-
-		widget.addDomHandler(new KeyDownHandler() {
-			@Override
-			public void onKeyDown(KeyDownEvent event) {
-				// FIXME: check if menu is shown or handleNavigation will do it?
-
-				boolean handled = contextMenuWidget.handleNavigation(event
-						.getNativeEvent().getKeyCode(), event.getNativeEvent()
-						.getCtrlKey(), event.getNativeEvent().getShiftKey());
-
-				if (handled) {
-					event.stopPropagation();
-					event.preventDefault();
-				}
-			}
-		}, KeyDownEvent.getType());
+		
+//		widget.addDomHandler(new KeyDownHandler() {
+//			@Override
+//			public void onKeyDown(KeyDownEvent event) {
+//				// FIXME: check if menu is shown or handleNavigation will do it?
+//
+//				boolean handled = contextMenuWidget.handleNavigation(event
+//						.getNativeEvent().getKeyCode(), event.getNativeEvent()
+//						.getCtrlKey(), event.getNativeEvent().getShiftKey());
+//
+//				if (handled) {
+//					event.stopPropagation();
+//					event.preventDefault();
+//				}
+//			}
+//		}, KeyDownEvent.getType());
 	}
 }

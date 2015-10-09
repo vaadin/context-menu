@@ -5,6 +5,10 @@
 	<!-- Inherit DefaultWidgetSet -->
 	<inherits name="com.vaadin.DefaultWidgetSet" /> 
 
+	<replace-with class="com.vaadin.addon.contextmenu.client.VMenuItem">
+		<when-type-is class="com.vaadin.client.ui.VMenuBar.CustomMenuItem"/>
+	</replace-with>
+	
 	<!-- Widget styles in public -directory -->
 	<stylesheet src="context-menu/styles.css"/>
 

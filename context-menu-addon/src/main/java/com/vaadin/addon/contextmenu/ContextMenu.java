@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.vaadin.addon.contextmenu.widgetset.client.ContextMenuClientRpc;
-import com.vaadin.addon.contextmenu.widgetset.client.ContextMenuServerRpc;
-import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState;
-import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState.MenuItemState;
+import com.vaadin.addon.contextmenu.client.ContextMenuClientRpc;
+import com.vaadin.addon.contextmenu.client.ContextMenuServerRpc;
+import com.vaadin.addon.contextmenu.client.MenuSharedState;
+import com.vaadin.addon.contextmenu.client.MenuSharedState.MenuItemState;
 import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.server.AbstractExtension;
@@ -17,14 +17,14 @@ import com.vaadin.ui.AbstractComponent;
 
 @SuppressWarnings("serial")
 public class ContextMenu extends AbstractExtension implements Menu {
-	
-	private Logger logger = Logger.getLogger("ContextMenu");
-	
-    private AbstractMenu menu = new AbstractMenu();
 
-    public ContextMenu(AbstractComponent component) {
-    	extend(component);
-    	
+	private Logger logger = Logger.getLogger("ContextMenu");
+
+	private AbstractMenu menu = new AbstractMenu();
+
+	public ContextMenu(AbstractComponent component) {
+		extend(component);
+
 		registerRpc(new ContextMenuServerRpc() {
 			@Override
 			public void itemClicked(int itemId, boolean menuClosed) {
@@ -32,7 +32,7 @@ public class ContextMenu extends AbstractExtension implements Menu {
 			}
 		});
 
-    	component.addContextClickListener(new ContextClickListener() {
+		component.addContextClickListener(new ContextClickListener() {
 			@Override
 			public void contextClick(ContextClickEvent event) {
 				logger.info("Context click listener");
@@ -41,61 +41,82 @@ public class ContextMenu extends AbstractExtension implements Menu {
 		});
 	}
 
-    @Override
-    public void beforeClientResponse(boolean initial) {
-    	logger.info("beforeClientResponse");
-    	
-    	super.beforeClientResponse(initial);
+	@Override
+	public void beforeClientResponse(boolean initial) {
+		logger.info("beforeClientResponse");
 
-    	// FIXME: think about where this is supposed to be
-    	
-        /*
-         * This should also be used by MenuBar, upgrading it from Vaadin 6 to Vaadin 7 communication mechanism.
-         * Thus to be moved e.g. to the AbstractMenu.
-         */
-    	MenuSharedState menuSharedState = getState();
-    	menuSharedState.htmlContentAllowed = isHtmlContentAllowed();
-    	menuSharedState.menuItems = convertItemsToState(getItems());
-    }
-    
-    public void open(int x, int y) {
+		super.beforeClientResponse(initial);
+
+		// FIXME: think about where this is supposed to be
+
+		/*
+		 * This should also be used by MenuBar, upgrading it from Vaadin 6 to
+		 * Vaadin 7 communication mechanism. Thus to be moved e.g. to the
+		 * AbstractMenu.
+		 */
+		MenuSharedState menuSharedState = getState();
+		menuSharedState.htmlContentAllowed = isHtmlContentAllowed();
+		menuSharedState.menuItems = convertItemsToState(getItems());
+	}
+
+	public void open(int x, int y) {
 		getRpcProxy(ContextMenuClientRpc.class).showContextMenu(x, y);
-    }
-    
-    private List<MenuItemState> convertItemsToState(List<MenuItem> items) {
-    	if (items == null || items.size() == 0)
-    		return null;
-    	
-    	List<MenuItemState> state = new ArrayList<MenuItemState>();
-    	
-    	for (MenuItem item : items) {
-    		MenuItemState menuItemState = new MenuItemState();
-    		menuItemState.id = item.getId();
-    		menuItemState.text = item.getText();
-    		menuItemState.checkable = item.isCheckable();
+	}
+
+	private List<MenuItemState> convertItemsToState(List<MenuItem> items) {
+		if (items == null || items.size() == 0)
+			return null;
+
+		List<MenuItemState> state = new ArrayList<MenuItemState>();
+
+		for (MenuItem item : items) {
+			MenuItemState menuItemState = new MenuItemState();
+
+			if (!item.isVisible())
+				continue;
+
+			menuItemState.id = item.getId();
+			menuItemState.text = item.getText();
+			menuItemState.checkable = item.isCheckable();
 			menuItemState.checked = item.isChecked();
 			menuItemState.description = item.getDescription();
 			menuItemState.enabled = item.isEnabled();
 			menuItemState.separator = item.isSeparator();
-			menuItemState.icon = ResourceReference.create(
-	                item.getIcon(), this, "");
+			menuItemState.icon = ResourceReference.create(item.getIcon(), this,
+					"");
 			menuItemState.styleName = item.getStyleName();
-    		
-    		menuItemState.childItems = convertItemsToState(item.getChildren());
-    		
-    		state.add(menuItemState);
-    	}
-    	
-    	return state;
-    }
-    
-    @Override
-    protected MenuSharedState getState() {
-    	return (MenuSharedState) super.getState();
-    }
-        
-    /**** Delegates to AbstractMenu ****/
-    
+
+			menuItemState.childItems = convertItemsToState(item.getChildren());
+
+			state.add(menuItemState);
+		}
+
+		return state;
+	}
+
+	@Override
+	protected MenuSharedState getState() {
+		return (MenuSharedState) super.getState();
+	}
+
+	// Should these also be in MenuInterface and then throw exception for
+	// MenuBar?
+	public MenuItem addSeparator() {
+		// FIXME: this is a wrong way
+		MenuItemImpl item = (MenuItemImpl) addItem("", null);
+		item.setSeparator(true);
+		return item;
+	}
+
+	public MenuItem addSeparatorBefore(MenuItem itemToAddBefore) {
+		// FIXME: this is a wrong way
+		MenuItemImpl item = (MenuItemImpl) addItemBefore("", null, null, itemToAddBefore);
+		item.setSeparator(true);
+		return item;
+	}
+
+	/**** Delegates to AbstractMenu ****/
+
 	@Override
 	public MenuItem addItem(String caption, Command command) {
 		return menu.addItem(caption, command);
@@ -142,5 +163,5 @@ public class ContextMenu extends AbstractExtension implements Menu {
 		return menu.isHtmlContentAllowed();
 	}
 
-    /**** End of deletates to AbstractMenu ****/
+	/**** End of deletates to AbstractMenu ****/
 }
