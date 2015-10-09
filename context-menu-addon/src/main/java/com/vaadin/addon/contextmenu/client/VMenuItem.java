@@ -1,4 +1,4 @@
-package com.vaadin.addon.contextmenu.widgetset.client;
+package com.vaadin.addon.contextmenu.client;
 
 import java.util.logging.Logger;
 

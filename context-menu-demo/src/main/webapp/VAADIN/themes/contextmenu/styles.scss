@@ -5,7 +5,7 @@ $green: #40b527;
 $darkgreen: darken($green, 30%);
 
 // Prefix all selectors in your theme with .demo
-.demo {
+.contextmenu {
 
 	// Include valo theme styles in your theme
 	@include valo;

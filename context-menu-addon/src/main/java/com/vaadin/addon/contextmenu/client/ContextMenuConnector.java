@@ -1,4 +1,4 @@
-package com.vaadin.addon.contextmenu.widgetset.client;
+package com.vaadin.addon.contextmenu.client;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -9,7 +9,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
 import com.vaadin.addon.contextmenu.ContextMenu;
-import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState.MenuItemState;
+import com.vaadin.addon.contextmenu.client.MenuSharedState.MenuItemState;
 import com.vaadin.client.ApplicationConnection;
 import com.vaadin.client.ServerConnector;
 import com.vaadin.client.WidgetUtil;

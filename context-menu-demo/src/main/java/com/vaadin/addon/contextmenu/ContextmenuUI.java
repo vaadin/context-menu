@@ -26,7 +26,7 @@ import com.vaadin.ui.VerticalLayout;
 public class ContextmenuUI extends UI {
 	
 	@WebServlet(value = "/*", asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class, widgetset = "com.vaadin.addon.contextmenu.widgetset.ContextmenuWidgetset")
+	@VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class, widgetset = "com.vaadin.addon.contextmenu.demo.DemoWidgetSet")
 	public static class Servlet extends VaadinServlet {
 	}
 
@@ -49,7 +49,7 @@ public class ContextmenuUI extends UI {
 		fillMenu(menuBar);
 		layout.addComponent(menuBar);
 
-		ContextMenu contextMenu = new ContextMenu(layout);
+		final ContextMenu contextMenu = new ContextMenu(layout);
 		fillMenu(contextMenu);
 
 		button.addContextClickListener(new ContextClickListener() {

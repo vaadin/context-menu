@@ -1,4 +1,4 @@
-package com.vaadin.addon.contextmenu.widgetset.client;
+package com.vaadin.addon.contextmenu.client;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;

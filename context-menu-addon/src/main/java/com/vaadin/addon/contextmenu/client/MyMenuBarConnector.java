@@ -1,4 +1,4 @@
-package com.vaadin.addon.contextmenu.widgetset.client;
+package com.vaadin.addon.contextmenu.client;
 
 import com.vaadin.addon.contextmenu.MenuBar;
 import com.vaadin.client.ui.menubar.MenuBarConnector;

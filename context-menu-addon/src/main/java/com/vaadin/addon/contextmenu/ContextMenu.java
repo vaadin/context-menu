@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.vaadin.addon.contextmenu.widgetset.client.ContextMenuClientRpc;
-import com.vaadin.addon.contextmenu.widgetset.client.ContextMenuServerRpc;
-import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState;
-import com.vaadin.addon.contextmenu.widgetset.client.MenuSharedState.MenuItemState;
+import com.vaadin.addon.contextmenu.client.ContextMenuClientRpc;
+import com.vaadin.addon.contextmenu.client.ContextMenuServerRpc;
+import com.vaadin.addon.contextmenu.client.MenuSharedState;
+import com.vaadin.addon.contextmenu.client.MenuSharedState.MenuItemState;
 import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.server.AbstractExtension;
