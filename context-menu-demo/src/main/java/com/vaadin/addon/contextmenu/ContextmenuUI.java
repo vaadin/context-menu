@@ -2,27 +2,23 @@ package com.vaadin.addon.contextmenu;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.vaadin.annotations.PreserveOnRefresh;
+import com.vaadin.addon.contextmenu.ContextMenu.ContextMenuOpenListener;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.event.ContextClickEvent;
-import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.GridContextClickEvent;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "unchecked" })
 @Theme("contextmenu")
-@PreserveOnRefresh
+//@PreserveOnRefresh
 public class ContextmenuUI extends UI {
 	
 	@WebServlet(value = "/*", asyncSupported = true)
@@ -30,66 +26,46 @@ public class ContextmenuUI extends UI {
 	public static class Servlet extends VaadinServlet {
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void init(VaadinRequest request) {
 		final VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
 		setContent(layout);
 
-		Button button = new Button("Click Me");
-		button.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				layout.addComponent(new Label("Thank you for clicking"));
-			}
-		});
+		Button button = new Button("Button 1");
 		layout.addComponent(button);
 
-		MenuBar menuBar = new MenuBar();
-		fillMenu(menuBar);
-		layout.addComponent(menuBar);
+		Button button2 = new Button("Button 2");
+		layout.addComponent(button2);
 
-		final ContextMenu contextMenu = new ContextMenu(layout);
+		ContextMenu contextMenu = new ContextMenu(this, false);
 		fillMenu(contextMenu);
-
-		button.addContextClickListener(new ContextClickListener() {
+		
+		contextMenu.setAsContextMenuOf(button);
+		contextMenu.setAsContextMenuOf(button2);
+		
+		contextMenu.addContextMenuOpenListener(new ContextMenuOpenListener() {
 			@Override
-			public void contextClick(ContextClickEvent event) {
-				contextMenu.addItem("you clicked at " + event.getClientX()
-						+ "x" + event.getClientY(), a -> {
-					Notification.show("click");
-				});
+			public void onContextMenuOpen(ContextMenuOpenEvent event) {
+				Notification.show("Context menu on" + event.getSourceComponent().getCaption());
 			}
 		});
 
-		// MenuItem item3 = contextMenu.addItem("root", e -> {
-		// Notification.show("root"); });
-		// item3.addItem("nested", e -> Notification.show("nested"));
-		// MenuItem item4 = contextMenu.addItem("root2", e->
-		// Notification.show("root2"));
-		// item4.addItem("nested", e -> Notification.show("nested"));
-		//
-		// item3.setCheckable(true);
-		// item3.setCheckable(true);
+		layout.addComponent(createGrid1());
+		layout.addComponent(createGrid2());
+	}
 
-		button.addClickListener(e -> {
-			contextMenu.addItem("dynamically added item", a -> {
-				Notification.show("click");
-			});
-		});
-
-		layout.addComponent(createOriginalMenu());
-
+	private Component createGrid1() {
 		Grid grid = new Grid();
 
-		ContextMenu contextMenu2 = new ContextMenu(grid);
+		ContextMenu contextMenu2 = new ContextMenu(grid, true);
 
 		grid.addColumn("Section");
 		grid.addColumn("Column");
 		grid.addColumn("Row");
-		layout.addComponent(grid);
-		grid.addContextClickListener(e -> {
-			GridContextClickEvent gridE = (GridContextClickEvent) e;
+		
+		contextMenu2.addContextMenuOpenListener(e -> {
+			GridContextClickEvent gridE = (GridContextClickEvent) e.getContextClickEvent();
 
 			Object itemId = grid.getContainerDataSource().addItem();
 			grid.getContainerDataSource().getItem(itemId)
@@ -107,6 +83,34 @@ public class ContextmenuUI extends UI {
 					f -> Notification.show("did something"));
 
 		});
+		
+		return grid;
+	}
+
+	private Component createGrid2() {
+		Grid grid = new Grid();
+
+		GridContextMenu gridContextMenu = new GridContextMenu(grid);
+
+		grid.addColumn("column 1");
+		grid.addColumn("column 2");
+		
+		gridContextMenu.addGridHeaderContextMenuListener(e -> {
+			gridContextMenu.removeItems();
+			gridContextMenu.addItem("Add Item", k -> {
+				Object itemId = grid.getContainerDataSource().addItem();
+				grid.getContainerDataSource().getItem(itemId)
+						.getItemProperty("column 1")
+						.setValue("added from header column " + e.getPropertyId());
+			});			
+		});
+
+		gridContextMenu.addGridBodyContextMenuListener(e -> {
+			gridContextMenu.removeItems();
+			gridContextMenu.addItem("Remove this row", k -> grid.getContainerDataSource().removeItem(e.getItemId()));
+		});
+		
+		return grid;
 	}
 
 	private void fillMenu(Menu menu) {
@@ -147,48 +151,5 @@ public class ContextmenuUI extends UI {
 		item6.addSeparator();
 		item6.addItem("Subitem", e -> Notification.show("SubItem"))
 				.setDescription("Test");
-	}
-
-	private Component createOriginalMenu() {
-		com.vaadin.ui.MenuBar menu = new com.vaadin.ui.MenuBar();
-
-		final com.vaadin.ui.MenuBar.MenuItem item = menu.addItem("Checkable",
-				e -> {
-					Notification.show("checked: " + e.isChecked());
-				});
-		item.setCheckable(true);
-		item.setChecked(true);
-
-		com.vaadin.ui.MenuBar.MenuItem item2 = menu.addItem("Disabled", e -> {
-			Notification.show("disabled");
-		});
-		item2.setEnabled(false);
-
-		com.vaadin.ui.MenuBar.MenuItem item3 = menu.addItem("Invisible", e -> {
-			Notification.show("invisible");
-		});
-		item3.setVisible(false);
-
-		com.vaadin.ui.MenuBar.MenuItem item4 = menu.addItem(
-				"Icon + Description + <b>HTML</b>", e -> {
-					Notification.show("icon");
-				});
-		item4.setIcon(FontAwesome.ADJUST);
-		item4.setDescription("Test tooltip");
-
-		com.vaadin.ui.MenuBar.MenuItem item5 = menu.addItem("Custom stylename",
-				e -> {
-					Notification.show("stylename");
-				});
-		item5.setStyleName("teststyle");
-
-		com.vaadin.ui.MenuBar.MenuItem item6 = menu.addItem("Submenu", e -> {
-		});
-		item6.addItem("Subitem", e -> Notification.show("SubItem"));
-		item6.addSeparator();
-		item6.addItem("Subitem", e -> Notification.show("SubItem"))
-				.setDescription("Test");
-
-		return menu;
 	}
 }

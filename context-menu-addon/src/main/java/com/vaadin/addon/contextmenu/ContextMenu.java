@@ -1,19 +1,26 @@
 package com.vaadin.addon.contextmenu;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.EventListener;
+import java.util.EventObject;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.vaadin.addon.contextmenu.ContextMenu.ContextMenuOpenListener.ContextMenuOpenEvent;
 import com.vaadin.addon.contextmenu.client.ContextMenuClientRpc;
 import com.vaadin.addon.contextmenu.client.ContextMenuServerRpc;
 import com.vaadin.addon.contextmenu.client.MenuSharedState;
 import com.vaadin.addon.contextmenu.client.MenuSharedState.MenuItemState;
 import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
+import com.vaadin.event.ContextClickEvent.ContextClickNotifier;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ResourceReference;
 import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Component;
+import com.vaadin.util.ReflectTools;
 
 @SuppressWarnings("serial")
 public class ContextMenu extends AbstractExtension implements Menu {
@@ -22,8 +29,27 @@ public class ContextMenu extends AbstractExtension implements Menu {
 
 	private AbstractMenu menu = new AbstractMenu();
 
-	public ContextMenu(AbstractComponent component) {
-		extend(component);
+	private ContextClickListener contextClickListener = new ContextClickListener() {
+		@Override
+		public void contextClick(ContextClickEvent event) {
+			logger.info("Context click listener");
+
+			fireEvent(new ContextMenuOpenEvent(ContextMenu.this, event));
+
+			open(event.getClientX(), event.getClientY());
+		}
+	};
+
+	/**
+	 * @param parentComponent
+	 *            The component to whose lifecycle the context menu is tied to.
+	 * @param setAsMenuForParentComponent
+	 *            Determines if this menu will be shown for the parent
+	 *            component.
+	 */
+	public ContextMenu(AbstractComponent parentComponent,
+			boolean setAsMenuForParentComponent) {
+		extend(parentComponent);
 
 		registerRpc(new ContextMenuServerRpc() {
 			@Override
@@ -32,13 +58,24 @@ public class ContextMenu extends AbstractExtension implements Menu {
 			}
 		});
 
-		component.addContextClickListener(new ContextClickListener() {
-			@Override
-			public void contextClick(ContextClickEvent event) {
-				logger.info("Context click listener");
-				open(event.getClientX(), event.getClientY());
-			}
-		});
+		if (setAsMenuForParentComponent)
+			setAsContextMenuOf(parentComponent);
+	}
+
+	/**
+	 * Sets this as a context menu of the component. You can set one menu to as
+	 * many components as you wish.
+	 * 
+	 * @param component
+	 */
+	public void setAsContextMenuOf(ContextClickNotifier component) {
+		component.addContextClickListener(contextClickListener);
+	}
+
+	public void addContextMenuOpenListener(
+			ContextMenuOpenListener contextMenuComponentListener) {
+		addListener(ContextMenuOpenEvent.class, contextMenuComponentListener,
+				ContextMenuOpenListener.MENU_OPENED);
 	}
 
 	@Override
@@ -110,7 +147,8 @@ public class ContextMenu extends AbstractExtension implements Menu {
 
 	public MenuItem addSeparatorBefore(MenuItem itemToAddBefore) {
 		// FIXME: this is a wrong way
-		MenuItemImpl item = (MenuItemImpl) addItemBefore("", null, null, itemToAddBefore);
+		MenuItemImpl item = (MenuItemImpl) addItemBefore("", null, null,
+				itemToAddBefore);
 		item.setSeparator(true);
 		return item;
 	}
@@ -163,5 +201,65 @@ public class ContextMenu extends AbstractExtension implements Menu {
 		return menu.isHtmlContentAllowed();
 	}
 
-	/**** End of deletates to AbstractMenu ****/
+	/**** End of delegates to AbstractMenu ****/
+
+	public interface ContextMenuOpenListener extends EventListener {
+
+		public static final Method MENU_OPENED = ReflectTools.findMethod(
+				ContextMenuOpenListener.class, "onContextMenuOpen",
+				ContextMenuOpenEvent.class);
+
+		public void onContextMenuOpen(ContextMenuOpenEvent event);
+
+		public static class ContextMenuOpenEvent extends EventObject {
+			private final ContextMenu contextMenu;
+
+			private final int x;
+			private final int y;
+
+			private ContextClickEvent contextClickEvent;
+
+			public ContextMenuOpenEvent(ContextMenu contextMenu,
+					ContextClickEvent contextClickEvent) {
+				super(contextClickEvent.getComponent());
+
+				this.contextMenu = contextMenu;
+				this.contextClickEvent = contextClickEvent;
+				this.x = contextClickEvent.getClientX();
+				this.y = contextClickEvent.getClientY();
+			}
+
+			/**
+			 * @return ContextMenu that was opened.
+			 */
+			public ContextMenu getContextMenu() {
+				return contextMenu;
+			}
+
+			/**
+			 * @return Component which initiated the context menu open request.
+			 */
+			public Component getSourceComponent() {
+				return (Component) getSource();
+			}
+
+			/**
+			 * @return x-coordinate of open position.
+			 */
+			public int getX() {
+				return x;
+			}
+
+			/**
+			 * @return y-coordinate of open position.
+			 */
+			public int getY() {
+				return y;
+			}
+
+			public ContextClickEvent getContextClickEvent() {
+				return contextClickEvent;
+			}
+		}
+	}
 }

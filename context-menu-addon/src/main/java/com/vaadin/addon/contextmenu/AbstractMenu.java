@@ -163,7 +163,8 @@ public class AbstractMenu implements Menu {
 			if (clickedItem.isCheckable())
 				clickedItem.setChecked(!clickedItem.isChecked());
 
-			clickedItem.getCommand().menuSelected(clickedItem);
+			if (clickedItem.getCommand() != null)
+				clickedItem.getCommand().menuSelected(clickedItem);
 		}
 	}
 

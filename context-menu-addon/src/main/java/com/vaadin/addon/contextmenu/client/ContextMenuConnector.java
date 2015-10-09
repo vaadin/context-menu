@@ -23,6 +23,7 @@ import com.vaadin.shared.ui.Connect;
 @SuppressWarnings("serial")
 @Connect(ContextMenu.class)
 public class ContextMenuConnector extends AbstractExtensionConnector {
+	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger("ContextMenuConnector");
 
 	// TODO: make it so that we don't need this dummy root menu bar.
@@ -36,8 +37,6 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 
 	@Override
 	public void onStateChanged(StateChangeEvent stateChangeEvent) {
-		logger.severe("onStateChange");
-
 		super.onStateChanged(stateChangeEvent);
 
 		contextMenuWidget.clearItems();
@@ -66,16 +65,10 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 			}
 		});
 		
-		logger.info("Adding preview");
-		
 		Event.addNativePreviewHandler(new NativePreviewHandler() {
 			@Override
 			public void onPreviewNativeEvent(NativePreviewEvent event) {
-				logger.info("preview: " + contextMenuWidget.isPopupShowing());
-				
 				if (event.getTypeInt() == Event.ONKEYDOWN && contextMenuWidget.isPopupShowing()) {
-					logger.info("preview keydown and handle");
-					
 					boolean handled = contextMenuWidget.handleNavigation(event
 							.getNativeEvent().getKeyCode(), event
 							.getNativeEvent().getCtrlKey(), event
