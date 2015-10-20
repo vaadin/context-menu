@@ -19,12 +19,6 @@ public class AbstractMenu implements Menu {
 			connector.markAsDirty();
 	}
 
-	/**
-	 * This interface contains the layer for menu commands of the
-	 * {@link com.vaadin.ui.MenuBar} class. It's method will fire when the user
-	 * clicks on the containing {@link com.vaadin.ui.MenuItem}. The selected
-	 * item is given as an argument.
-	 */
 	public AbstractMenu() {
 	}
 

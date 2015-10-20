@@ -90,7 +90,7 @@ public interface MenuItem {
 	 * For the containing item. This will return null if the item is in the
 	 * top-level menu bar.
 	 * 
-	 * @return The containing {@link com.vaadin.ui.MenuItem} , or null if there
+	 * @return The containing {@link MenuItem} , or null if there
 	 *         is none
 	 */
 	MenuItem getParent();
@@ -177,7 +177,7 @@ public interface MenuItem {
 	/**
 	 * Sets the items's description. See {@link #getDescription()} for more
 	 * information on what the description is. This method will trigger a
-	 * {@link RepaintRequestEvent}.
+	 * menu item repaint.
 	 * 
 	 * @param description
 	 *            the new description string for the component.

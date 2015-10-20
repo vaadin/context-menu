@@ -7,6 +7,12 @@ import com.vaadin.server.Resource;
 
 public interface Menu {
 
+	/**
+	 * This interface contains the layer for menu commands of the
+	 * {@link com.vaadin.ui.MenuBar} class. It's method will fire when the user
+	 * clicks on the containing {@link MenuItem}. The selected
+	 * item is given as an argument.
+	 */
 	public interface Command extends Serializable {
 	    public void menuSelected(MenuItem selectedItem);
 	}

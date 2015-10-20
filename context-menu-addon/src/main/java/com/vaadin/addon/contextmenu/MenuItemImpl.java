@@ -10,7 +10,7 @@ import com.vaadin.server.Resource;
 
 /**
  * A composite class for menu items and sub-menus. You can set commands to be
- * fired on user click by implementing the {@link com.vaadin.ui.Command}
+ * fired on user click by implementing the {@link Menu.Command}
  * interface. You can also add multiple MenuItems to a MenuItem and create a
  * sub-menu.
  * 
@@ -43,7 +43,7 @@ class MenuItemImpl implements Serializable, MenuItem {
 	 * associated with it. Icon and command can be null, but a caption must be
 	 * given.
 	 * 
-	 * @param text
+	 * @param caption
 	 *            The text associated with the command
 	 * @param command
 	 *            The command to be fired
