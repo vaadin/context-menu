@@ -12,24 +12,27 @@ Official releases of this add-on are available at Vaadin Directory. For Maven in
 
 ## Building and running demo
 
-git clone <url of the ContextMenu repository>
+git clone https://github.com/vaadin/context-menu.git
 mvn clean install
-cd demo
+cd context-menu-demo
 mvn jetty:run
 
 To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
-
-### Version 1.0-SNAPSHOT
-- ...
-- ...
+ - Basic support for component context menu everywhere
+ - Basic code examples
 
 ## Roadmap
 
-This component is developed as a hobby with no public roadmap or any guarantees of upcoming releases. That said, the following features are planned for upcoming releases:
-- ...
-- ...
+### Version 0.8
+- Public make the best demo ever(sampler)
+
+### Version 0.9
+- Get feedback, improve
+
+### Version 0.9
+- Integrate to the Vaadin framework
 
 ## Issue tracking
 
@@ -55,24 +58,5 @@ ContextMenu is written by Vaadin Ltd.
 
 ## Getting started
 
-Here is a simple example on how to try out the add-on component:
+Check a demo application included.
 
-<...>
-
-## Features
-
-### Feature A
-
-<...>
-
-### Feature B
-
-<...>
-
-### Feature C
-
-<...>
-
-## API
-
-ContextMenu JavaDoc is available online at <...>
