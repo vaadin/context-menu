@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import com.vaadin.addon.contextmenu.ContextMenu.ContextMenuOpenListener;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.data.Item;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -16,140 +17,152 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings({"serial", "unchecked" })
+@SuppressWarnings({"serial", "unchecked"})
 @Theme("contextmenu")
 //@PreserveOnRefresh
 public class ContextmenuUI extends UI {
-	
-	@WebServlet(value = "/*", asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class, widgetset = "com.vaadin.addon.contextmenu.demo.DemoWidgetSet")
-	public static class Servlet extends VaadinServlet {
-	}
 
-	@Override
-	protected void init(VaadinRequest request) {
-		final VerticalLayout layout = new VerticalLayout();
-		layout.setMargin(true);
-		setContent(layout);
+    @WebServlet(value = "/*", asyncSupported = true)
+    @VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class, widgetset = "com.vaadin.addon.contextmenu.demo.DemoWidgetSet")
+    public static class Servlet extends VaadinServlet {
+    }
 
-		Button button = new Button("Button 1");
-		layout.addComponent(button);
+    @Override
+    protected void init(VaadinRequest request) {
+        final VerticalLayout layout = new VerticalLayout();
+        layout.setMargin(true);
+        setContent(layout);
 
-		Button button2 = new Button("Button 2");
-		layout.addComponent(button2);
+        Button button = new Button("Button 1");
+        layout.addComponent(button);
 
-		ContextMenu contextMenu = new ContextMenu(this, false);
-		fillMenu(contextMenu);
-		
-		contextMenu.setAsContextMenuOf(button);
-		contextMenu.setAsContextMenuOf(button2);
-		
-		contextMenu.addContextMenuOpenListener(new ContextMenuOpenListener() {
-			@Override
-			public void onContextMenuOpen(ContextMenuOpenEvent event) {
-				Notification.show("Context menu on" + event.getSourceComponent().getCaption());
-			}
-		});
+        Button button2 = new Button("Button 2");
+        layout.addComponent(button2);
 
-		layout.addComponent(createGrid1());
-		layout.addComponent(createGrid2());
-	}
+        ContextMenu contextMenu = new ContextMenu(this, false);
+        fillMenu(contextMenu);
 
-	private Component createGrid1() {
-		Grid grid = new Grid();
+        contextMenu.setAsContextMenuOf(button);
+        contextMenu.setAsContextMenuOf(button2);
 
-		ContextMenu contextMenu2 = new ContextMenu(grid, true);
+        contextMenu.addContextMenuOpenListener(new ContextMenuOpenListener() {
+            @Override
+            public void onContextMenuOpen(ContextMenuOpenEvent event) {
+                Notification.show("Context menu on" + event.getSourceComponent().getCaption());
+            }
+        });
 
-		grid.addColumn("Section");
-		grid.addColumn("Column");
-		grid.addColumn("Row");
-		
-		contextMenu2.addContextMenuOpenListener(e -> {
-			GridContextClickEvent gridE = (GridContextClickEvent) e.getContextClickEvent();
+        layout.addComponent(createGrid1());
+        layout.addComponent(createGrid2());
+    }
 
-			Object itemId = grid.getContainerDataSource().addItem();
-			grid.getContainerDataSource().getItem(itemId)
-					.getItemProperty("Section")
-					.setValue(gridE.getSection().toString());
-			grid.getContainerDataSource().getItem(itemId)
-					.getItemProperty("Column")
-					.setValue(gridE.getPropertyId().toString());
-			grid.getContainerDataSource().getItem(itemId)
-					.getItemProperty("Row").setValue(gridE.getRowIndex() + "");
+    private Component createGrid1() {
+        Grid grid = new Grid();
 
-			contextMenu2.removeItems();
-			contextMenu2.addItem("Called from column " + gridE.getPropertyId()
-					+ " on row " + gridE.getRowIndex(),
-					f -> Notification.show("did something"));
+        ContextMenu contextMenu2 = new ContextMenu(grid, true);
 
-		});
-		
-		return grid;
-	}
+        grid.addColumn("Section");
+        grid.addColumn("Column");
+        grid.addColumn("Row");
 
-	private Component createGrid2() {
-		Grid grid = new Grid();
+        contextMenu2.addContextMenuOpenListener(e -> {
+            GridContextClickEvent gridE = (GridContextClickEvent) e.getContextClickEvent();
 
-		GridContextMenu gridContextMenu = new GridContextMenu(grid);
+            Object itemId = grid.getContainerDataSource().addItem();
+            Item item = grid.getContainerDataSource().getItem(itemId);
+            item.getItemProperty("Section").setValue(String.valueOf(gridE.getSection()));
+            Object propertyId = gridE.getPropertyId();
 
-		grid.addColumn("column 1");
-		grid.addColumn("column 2");
-		
-		gridContextMenu.addGridHeaderContextMenuListener(e -> {
-			gridContextMenu.removeItems();
-			gridContextMenu.addItem("Add Item", k -> {
-				Object itemId = grid.getContainerDataSource().addItem();
-				grid.getContainerDataSource().getItem(itemId)
-						.getItemProperty("column 1")
-						.setValue("added from header column " + e.getPropertyId());
-			});			
-		});
+            item.getItemProperty("Column").setValue(propertyId != null ? propertyId.toString() : "??");
+            int rowIndex = gridE.getRowIndex();
+            item.getItemProperty("Row").setValue(rowIndex < 0 ? "Outside rows" : String.valueOf(rowIndex));
 
-		gridContextMenu.addGridBodyContextMenuListener(e -> {
-			gridContextMenu.removeItems();
-			gridContextMenu.addItem("Remove this row", k -> grid.getContainerDataSource().removeItem(e.getItemId()));
-		});
-		
-		return grid;
-	}
+            contextMenu2.removeItems();
+            contextMenu2.addItem("Called from column " + propertyId
+                            + " on row " + gridE.getRowIndex(),
+                    f -> Notification.show("did something"));
 
-	private void fillMenu(Menu menu) {
-		final MenuItem item = menu.addItem("Checkable", e -> {
-			Notification.show("checked: " + e.isChecked());
-		});
-		item.setCheckable(true);
-		item.setChecked(true);
+        });
 
-		MenuItem item2 = menu.addItem("Disabled", e -> {
-			Notification.show("disabled");
-		});
-		item2.setEnabled(false);
+        return grid;
+    }
 
-		MenuItem item3 = menu.addItem("Invisible", e -> {
-			Notification.show("invisible");
-		});
-		item3.setVisible(false);
+    private Component createGrid2() {
+        Grid grid = new Grid();
 
-		if (menu instanceof ContextMenu)
-			((ContextMenu) menu).addSeparator();
+        GridContextMenu gridContextMenu = new GridContextMenu(grid);
 
-		MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>",
-				e -> {
-					Notification.show("icon");
-				});
-		item4.setIcon(FontAwesome.ADJUST);
-		item4.setDescription("Test tooltip");
+        grid.addColumn("column 1").setHeaderCaption("Column 1(right-click here)");
+        grid.addColumn("column 2").setHeaderCaption("Column 2(right-click here)");
+        ;
 
-		MenuItem item5 = menu.addItem("Custom stylename", e -> {
-			Notification.show("stylename");
-		});
-		item5.setStyleName("teststyle");
+        gridContextMenu.addGridHeaderContextMenuListener(e -> {
+            gridContextMenu.removeItems();
+            gridContextMenu.addItem("Add Item", k -> {
+                Object itemId = grid.getContainerDataSource().addItem();
+                grid.getContainerDataSource().getItem(itemId)
+                        .getItemProperty("column 1")
+                        .setValue("added from header column " + e.getPropertyId());
+            });
+        });
 
-		MenuItem item6 = menu.addItem("Submenu", e -> {
-		});
-		item6.addItem("Subitem", e -> Notification.show("SubItem"));
-		item6.addSeparator();
-		item6.addItem("Subitem", e -> Notification.show("SubItem"))
-				.setDescription("Test");
-	}
+        gridContextMenu.addGridBodyContextMenuListener(e -> {
+            gridContextMenu.removeItems();
+            final Object itemId = e.getItemId();
+            if (itemId == null) {
+                gridContextMenu.addItem("Add Item", k -> {
+                    Object newItemId = grid.getContainerDataSource().addItem();
+                    grid.getContainerDataSource().getItem(newItemId)
+                            .getItemProperty("column 1")
+                            .setValue("added from empty space");
+                });
+            } else {
+                gridContextMenu.addItem("Remove this row", k -> {
+                    grid.getContainerDataSource().removeItem(itemId);
+                });
+            }
+        });
+
+        return grid;
+    }
+
+    private void fillMenu(Menu menu) {
+        final MenuItem item = menu.addItem("Checkable", e -> {
+            Notification.show("checked: " + e.isChecked());
+        });
+        item.setCheckable(true);
+        item.setChecked(true);
+
+        MenuItem item2 = menu.addItem("Disabled", e -> {
+            Notification.show("disabled");
+        });
+        item2.setEnabled(false);
+
+        MenuItem item3 = menu.addItem("Invisible", e -> {
+            Notification.show("invisible");
+        });
+        item3.setVisible(false);
+
+        if (menu instanceof ContextMenu)
+            ((ContextMenu) menu).addSeparator();
+
+        MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>",
+                e -> {
+                    Notification.show("icon");
+                });
+        item4.setIcon(FontAwesome.ADJUST);
+        item4.setDescription("Test tooltip");
+
+        MenuItem item5 = menu.addItem("Custom stylename", e -> {
+            Notification.show("stylename");
+        });
+        item5.setStyleName("teststyle");
+
+        MenuItem item6 = menu.addItem("Submenu", e -> {
+        });
+        item6.addItem("Subitem", e -> Notification.show("SubItem"));
+        item6.addSeparator();
+        item6.addItem("Subitem", e -> Notification.show("SubItem"))
+                .setDescription("Test");
+    }
 }
