@@ -4,7 +4,7 @@ Vaadin ContextMenu is an UI component add-on for Vaadin 7.
 
 ## Online demo
 
-Try the add-on demo at <url of the online demo>
+Try the add-on demo at http://demo.vaadin.com/context-menu-demo/
 
 ## Download release
 
@@ -12,27 +12,34 @@ Official releases of this add-on are available at Vaadin Directory. For Maven in
 
 ## Building and running demo
 
-git clone https://github.com/vaadin/context-menu.git
-mvn clean install
-cd vaadin-context-menu-demo
-mvn jetty:run
+    git clone https://github.com/vaadin/context-menu.git
+    mvn clean install
+    cd vaadin-context-menu-demo
+    mvn jetty:run
 
 To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
+
+### Version 0.7
  - Basic support for component context menu everywhere
  - Basic code examples
+ - Use ContextClickEvent API introduced in Vaadin 7.6
 
 ## Roadmap
 
 ### Version 0.8
-- Public make the best demo ever(sampler)
+- Make the best demo ever(sampler)
 
 ### Version 0.9
 - Get feedback, improve
 
-### Version 0.9
-- Integrate to the Vaadin framework
+### Version 1.0
+- Production-quality release
+
+### Future plans
+- Unify ContextMenu with MenuBar API
+- Integrate into framework
 
 ## Issue tracking
 
@@ -40,13 +47,8 @@ The issues for this add-on are tracked on its github.com page. All bug reports a
 
 ## Contributions
 
-Contributions are welcome, but there are no guarantees that they are accepted as such. Process for contributing is the following:
-- Fork this project
-- Create an issue to this project about the contribution (bug or feature) if there is no such issue about it already. Try to keep the scope minimal.
-- Develop and test the fix or functionality carefully. Only include minimum amount of code needed to fix the issue.
-- Refer to the fixed issue in commit
-- Send a pull request for the original project
-- Comment on the original issue that you have implemented a fix for it
+Contributions are welcome, but there are no guarantees that they are accepted as such.
+Please contact sami@vaadin.com
 
 ## License & Author
 
