@@ -3,14 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.vaadin.addon</groupId>
-	<artifactId>context-menu-root</artifactId>
+	<artifactId>vaadin-context-menu-root</artifactId>
 	<packaging>pom</packaging>
 	<version>0.7</version>
 	<name>Vaadin ContextMenu Root Project</name>
 
 	<modules>
-		<module>context-menu-addon</module>
-		<module>context-menu-demo</module>
+		<module>vaadin-context-menu-addon</module>
+		<module>vaadin-context-menu-demo</module>
 	</modules>
 
 </project>

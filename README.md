@@ -8,13 +8,13 @@ Try the add-on demo at <url of the online demo>
 
 ## Download release
 
-Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, go to http://vaadin.com/addon/context-menu2
+Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, go to http://vaadin.com/addon/vaadin-context-menu
 
 ## Building and running demo
 
 git clone https://github.com/vaadin/context-menu.git
 mvn clean install
-cd context-menu-demo
+cd vaadin-context-menu-demo
 mvn jetty:run
 
 To see the demo, navigate to http://localhost:8080/
