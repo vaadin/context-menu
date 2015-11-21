@@ -13,7 +13,8 @@ Official releases of this add-on are available at Vaadin Directory. For Maven in
 ## Building and running demo
 
     git clone https://github.com/vaadin/context-menu.git
-    mvn clean install
+    cd context-menu
+    mvn install
     cd vaadin-context-menu-demo
     mvn jetty:run
 
