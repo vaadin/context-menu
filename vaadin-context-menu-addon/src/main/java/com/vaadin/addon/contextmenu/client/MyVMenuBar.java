@@ -4,8 +4,8 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.vaadin.client.ui.VMenuBar;
+import com.vaadin.client.ui.VOverlay;
 
 /**
  * This is just to overcome the issue of application connection. Not needed
@@ -23,77 +23,19 @@ public class MyVMenuBar extends VMenuBar {
 		super(subMenu, parentMenu);
 	}
 
-	// FIXME copy-paste from parent just to change VOverlay to MyVOverlay and
-	// make this method visible to ContextMenuConnector
+	@Override
+	protected VOverlay createOverlay() {
+		return new MyVOverlay(true, false, true);
+	}
+
+	// overridden to be visible for the connector
+	@Override
 	protected void showChildMenuAt(CustomMenuItem item, int top, int left) {
-		final int shadowSpace = 10;
-
-		// FIXME only this line in changed
-		popup = new MyVOverlay(true, false, true);
-		popup.setOwner(this);
-
-		/*
-		 * Use parents primary style name if possible and remove the submenu
-		 * prefix if needed
-		 */
-		String primaryStyleName = parentMenu != null ? parentMenu
-				.getStylePrimaryName() : getStylePrimaryName();
-		if (subMenu) {
-			primaryStyleName = primaryStyleName.replace(
-					SUBMENU_CLASSNAME_PREFIX, "");
-		}
-		popup.setStyleName(primaryStyleName + "-popup");
-
-		// Setting owner and handlers to support tooltips. Needed for tooltip
-		// handling of overlay widgets (will direct queries to parent menu)
-		if (parentMenu == null) {
-			popup.setOwner(this);
-		} else {
-			VMenuBar parent = parentMenu;
-			while (parent.getParentMenu() != null) {
-				parent = parent.getParentMenu();
-			}
-			popup.setOwner(parent);
-		}
-		if (client != null) {
-			client.getVTooltip().connectHandlersToWidget(popup);
-		}
-
-		popup.setWidget(item.getSubMenu());
-		popup.addCloseHandler(this);
-		popup.addAutoHidePartner(item.getElement());
-
-		// at 0,0 because otherwise IE7 add extra scrollbars (#5547)
-		popup.setPopupPosition(0, 0);
-
-		item.getSubMenu().onShow();
-		visibleChildMenu = item.getSubMenu();
-		item.getSubMenu().setParentMenu(this);
-
-		popup.show();
-
-		if (left + popup.getOffsetWidth() >= RootPanel.getBodyElement()
-				.getOffsetWidth() - shadowSpace) {
-			if (subMenu) {
-				left = item.getParentMenu().getAbsoluteLeft()
-						- popup.getOffsetWidth() - shadowSpace;
-			} else {
-				left = RootPanel.getBodyElement().getOffsetWidth()
-						- popup.getOffsetWidth() - shadowSpace;
-			}
-			// Accommodate space for shadow
-			if (left < shadowSpace) {
-				left = shadowSpace;
-			}
-		}
-
-		// top = adjustPopupHeight(top, shadowSpace);
-
-		popup.setPopupPosition(left, top);
-
+		super.showChildMenuAt(item, top, left);
 	}
 
 	// this method has a couple lines added, marked with FIXME
+	@Override
 	public boolean handleNavigation(int keycode, boolean ctrl, boolean shift) {
 
 		// If tab or shift+tab close menus
@@ -135,8 +77,9 @@ public class MyVMenuBar extends VMenuBar {
 			} else if (getParentMenu().getParentMenu() == null) {
 
 				// FIXME: this line added
-				if (isContextMenu)
+				if (isContextMenu) {
 					return true;
+				}
 
 				// Inside a sub menu, whose parent is a root menu item
 				VMenuBar root = getParentMenu();
@@ -347,5 +290,5 @@ public class MyVMenuBar extends VMenuBar {
 
 	public boolean isPopupShowing() {
 		return menuVisible;
-	}	
+	}
 }
