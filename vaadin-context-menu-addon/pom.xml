@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vaadin.addon</groupId>
     <artifactId>vaadin-context-menu</artifactId>
@@ -21,19 +21,19 @@
         <Vaadin-License-Title>Apache License 2.0</Vaadin-License-Title>
         <Vaadin-Addon>${artifactId}-${project.version}.jar</Vaadin-Addon>
     </properties>
-        
+
     <organization>
         <name>Vaadin Ltd</name>
         <url>https://github.com/vaadin/context-menu/</url>
     </organization>
-    
+
     <scm>
         <url>git://github.com/vaadin/context-menu.git</url>
         <connection>scm:git:git://github.com/vaadin/context-menu.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:vaadin/context-menu.git</developerConnection>
         <tag>Vaadin ContextMenu</tag>
     </scm>
-        
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/vaadin/context-menu/issues</url>
@@ -89,8 +89,9 @@
             <version>${vaadin.version}</version>
             <scope>provided</scope>
         </dependency>
-		
-        <!-- This can be replaced with TestNG or some other test framework supported by the surefire plugin -->
+
+        <!-- This can be replaced with TestNG or some other test framework
+            supported by the surefire plugin -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -116,7 +117,6 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <version>2.5.3</version>
-                <extensions>true</extensions>
                 <executions>
                     <execution>
                         <id>default-bundle</id>
@@ -124,6 +124,11 @@
                         <goals>
                             <goal>manifest</goal>
                         </goals>
+                        <configuration>
+                            <instructions>
+                                <Import-Package>org.jsoup.*;version="[1.6.3,2)",*</Import-Package>
+                            </instructions>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -209,8 +214,8 @@
             </plugin>
         </plugins>
 
-        <!-- This is needed for the sources required by the client-side compiler to be 
-        included in the produced JARs -->
+        <!-- This is needed for the sources required by the client-side compiler
+            to be included in the produced JARs -->
         <resources>
             <resource>
                 <directory>src/main/java</directory>
@@ -222,7 +227,7 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-		
+
     </build>
 
 </project>
