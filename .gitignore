@@ -21,3 +21,4 @@ nb-configuration.xml
 .settings/
 
 target/
+context-menu-demo/src/main/webapp/VAADIN/widgetsets/
