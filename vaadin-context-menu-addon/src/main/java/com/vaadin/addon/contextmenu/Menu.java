@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.vaadin.server.Resource;
 
-public interface Menu {
+public interface Menu extends Serializable {
 
 	/**
 	 * This interface contains the layer for menu commands of the
