@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.EventObject;
 import java.util.List;
-import java.util.logging.Logger;
 
 import com.vaadin.addon.contextmenu.ContextMenu.ContextMenuOpenListener.ContextMenuOpenEvent;
 import com.vaadin.addon.contextmenu.client.ContextMenuClientRpc;
@@ -25,15 +24,11 @@ import com.vaadin.util.ReflectTools;
 @SuppressWarnings("serial")
 public class ContextMenu extends AbstractExtension implements Menu {
 
-	private Logger logger = Logger.getLogger("ContextMenu");
-
 	private AbstractMenu menu = new AbstractMenu();
 
 	private ContextClickListener contextClickListener = new ContextClickListener() {
 		@Override
 		public void contextClick(ContextClickEvent event) {
-			logger.info("Context click listener");
-
 			fireEvent(new ContextMenuOpenEvent(ContextMenu.this, event));
 
 			open(event.getClientX(), event.getClientY());
@@ -80,8 +75,6 @@ public class ContextMenu extends AbstractExtension implements Menu {
 
 	@Override
 	public void beforeClientResponse(boolean initial) {
-		logger.info("beforeClientResponse");
-
 		super.beforeClientResponse(initial);
 
 		// FIXME: think about where this is supposed to be
