@@ -1,11 +1,12 @@
 package com.vaadin.addon.contextmenu;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.vaadin.addon.contextmenu.Menu.Command;
 import com.vaadin.server.Resource;
 
-public interface MenuItem {
+public interface MenuItem extends Serializable {
 
 	/**
 	 * Checks if the item has children (if it is a sub-menu).

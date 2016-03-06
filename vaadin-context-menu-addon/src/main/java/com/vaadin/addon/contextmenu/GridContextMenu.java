@@ -1,5 +1,6 @@
 package com.vaadin.addon.contextmenu;
 
+import java.io.Serializable;
 import java.util.EventListener;
 
 import com.vaadin.addon.contextmenu.ContextMenu.ContextMenuOpenListener.ContextMenuOpenEvent;
@@ -47,7 +48,7 @@ public class GridContextMenu extends ContextMenu {
         addGridSectionContextMenuListener(Section.BODY, listener);
     }
 
-    public interface GridContextMenuOpenListener extends EventListener {
+    public interface GridContextMenuOpenListener extends EventListener, Serializable {
 
         public void onContextMenuOpen(GridContextMenuOpenEvent event);
 

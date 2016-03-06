@@ -1,5 +1,6 @@
 package com.vaadin.addon.contextmenu;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.EventListener;
@@ -196,7 +197,7 @@ public class ContextMenu extends AbstractExtension implements Menu {
 
 	/**** End of delegates to AbstractMenu ****/
 
-	public interface ContextMenuOpenListener extends EventListener {
+	public interface ContextMenuOpenListener extends EventListener, Serializable {
 
 		public static final Method MENU_OPENED = ReflectTools.findMethod(
 				ContextMenuOpenListener.class, "onContextMenuOpen",
