@@ -108,8 +108,10 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 		CustomMenuItem item = menuToAddTo.addItem(itemText, new Command() {
 			@Override
 			public void execute() {
-				dummyRootMenuBar.hideChildren();
-				itemSelected(menuItemState.id);
+				if (contextMenuWidget.isAttached()) {
+					dummyRootMenuBar.hideChildren();
+					itemSelected(menuItemState.id);
+				}
 			}
 		});
 
