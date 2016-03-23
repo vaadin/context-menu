@@ -8,7 +8,7 @@ Try the add-on demo at http://demo.vaadin.com/context-menu-demo/
 
 ## Download release
 
-Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, go to http://vaadin.com/addon/vaadin-context-menu
+Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, go to https://vaadin.com/addon/vaadin-contextmenu
 
 ## Building and running demo
 
