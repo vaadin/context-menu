@@ -5,7 +5,7 @@
 	<groupId>com.vaadin.addon</groupId>
 	<artifactId>vaadin-context-menu-root</artifactId>
 	<packaging>pom</packaging>
-	<version>0.7.3-SNAPSHOT</version>
+	<version>0.7.3</version>
 	<name>Vaadin ContextMenu Root Project</name>
 
 	<modules>

@@ -5,7 +5,7 @@
     <groupId>com.vaadin.addon</groupId>
     <artifactId>vaadin-context-menu</artifactId>
     <packaging>jar</packaging>
-    <version>0.7.3-SNAPSHOT</version>
+    <version>0.7.3</version>
     <name>Vaadin ContextMenu</name>
 
     <properties>
