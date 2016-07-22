@@ -287,6 +287,33 @@ public class MyVMenuBar extends VMenuBar {
 		subMenu.selectFirstItem();
 
 	}
+	
+	@Override
+	public void itemClick(CustomMenuItem item) {
+        if (item.getCommand() != null) {
+        	try {
+            	item.getCommand().execute();
+        	} finally {
+                setSelected(null);
+                if (visibleChildMenu != null) {
+                    visibleChildMenu.hideChildren();
+                }
+                hideParents(true);
+                menuVisible = false;
+        	}
+        } else {
+            if (item.getSubMenu() != null
+                    && item.getSubMenu() != visibleChildMenu) {
+                setSelected(item);
+                showChildMenu(item);
+                menuVisible = true;
+            } else if (!subMenu) {
+                setSelected(null);
+                hideChildren();
+                menuVisible = false;
+            }
+        }
+	}
 
 	public boolean isPopupShowing() {
 		return menuVisible;
