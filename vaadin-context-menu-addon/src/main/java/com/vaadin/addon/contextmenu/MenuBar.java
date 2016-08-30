@@ -47,8 +47,8 @@ import com.vaadin.ui.declarative.DesignContext;
  * </p>
  */
 @SuppressWarnings({ "serial", "deprecation" })
-public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
-        Focusable {
+public class MenuBar extends AbstractComponent
+        implements Menu, LegacyComponent, Focusable {
 
     private MenuItem moreItem;
 
@@ -63,7 +63,7 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
     protected MenuBarState getState(boolean markAsDirty) {
         return (MenuBarState) super.getState(markAsDirty);
     }
-    
+
     /** Paint (serialise) the component for the client. */
     @Override
     public void paintContent(PaintTarget target) throws PaintException {
@@ -133,8 +133,7 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
 
             String description = item.getDescription();
             if (description != null && description.length() > 0) {
-                target.addAttribute(
-                        MenuBarConstants.ATTRIBUTE_ITEM_DESCRIPTION,
+                target.addAttribute(MenuBarConstants.ATTRIBUTE_ITEM_DESCRIPTION,
                         description);
             }
             if (item.isCheckable()) {
@@ -182,7 +181,7 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
                     }
                 }
 
-            }// while
+            } // while
 
             // If we got the clicked item, launch the command.
             if (found && tmpItem.isEnabled()) {
@@ -193,7 +192,7 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
                     tmpItem.getCommand().menuSelected(tmpItem);
                 }
             }
-        }// if
+        } // if
     }// changeVariables
 
     /**
@@ -224,8 +223,6 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
         super.focus();
     }
 
-
-
     @Override
     public void writeDesign(Element design, DesignContext designContext) {
         super.writeDesign(design, designContext);
@@ -234,7 +231,8 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
         }
 
         // in many cases there seems to be an empty more menu item
-        if (getMoreMenuItem() != null && !getMoreMenuItem().getText().isEmpty()) {
+        if (getMoreMenuItem() != null
+                && !getMoreMenuItem().getText().isEmpty()) {
             Element moreMenu = createMenuElement(getMoreMenuItem());
             moreMenu.attr("more", "");
             design.appendChild(moreMenu);
@@ -255,14 +253,14 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
                 def.getIcon(), Resource.class);
         DesignAttributeHandler.writeAttribute("disabled", attr,
                 !item.isEnabled(), !def.isEnabled(), boolean.class);
-        DesignAttributeHandler.writeAttribute("visible", attr,
-                item.isVisible(), def.isVisible(), boolean.class);
+        DesignAttributeHandler.writeAttribute("visible", attr, item.isVisible(),
+                def.isVisible(), boolean.class);
         DesignAttributeHandler.writeAttribute("separator", attr,
                 item.isSeparator(), def.isSeparator(), boolean.class);
         DesignAttributeHandler.writeAttribute("checkable", attr,
                 item.isCheckable(), def.isCheckable(), boolean.class);
-        DesignAttributeHandler.writeAttribute("checked", attr,
-                item.isChecked(), def.isChecked(), boolean.class);
+        DesignAttributeHandler.writeAttribute("checked", attr, item.isChecked(),
+                def.isChecked(), boolean.class);
         DesignAttributeHandler.writeAttribute("description", attr,
                 item.getDescription(), def.getDescription(), String.class);
         DesignAttributeHandler.writeAttribute("style-name", attr,
@@ -282,8 +280,8 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
     protected MenuItem readMenuElement(Element menuElement, MenuItem parent) {
         Resource icon = null;
         if (menuElement.hasAttr("icon")) {
-            icon = DesignAttributeHandler.getFormatter().parse(
-                    menuElement.attr("icon"), Resource.class);
+            icon = DesignAttributeHandler.getFormatter()
+                    .parse(menuElement.attr("icon"), Resource.class);
         }
 
         String caption = "";
@@ -296,8 +294,9 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
                 caption += node.toString();
             }
         }
-        
-        MenuItemImpl menu = new MenuItemImpl(parent, caption.trim(), icon, null);
+
+        MenuItemImpl menu = new MenuItemImpl(parent, caption.trim(), icon,
+                null);
 
         Attributes attr = menuElement.attributes();
         if (menuElement.hasAttr("icon")) {
@@ -325,16 +324,16 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
                     attr, boolean.class));
         }
         if (menuElement.hasAttr("description")) {
-            menu.setDescription(DesignAttributeHandler.readAttribute(
-                    "description", attr, String.class));
+            menu.setDescription(DesignAttributeHandler
+                    .readAttribute("description", attr, String.class));
         }
         if (menuElement.hasAttr("style-name")) {
-            menu.setStyleName(DesignAttributeHandler.readAttribute(
-                    "style-name", attr, String.class));
+            menu.setStyleName(DesignAttributeHandler.readAttribute("style-name",
+                    attr, String.class));
         }
 
         if (!subMenus.isEmpty()) {
-             menu.setChildren(new ArrayList<MenuItem>());
+            menu.setChildren(new ArrayList<MenuItem>());
         }
 
         for (Element subMenu : subMenus) {
@@ -345,64 +344,64 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
 
         return menu;
     }
-    
-	/**
-	 * Set the item that is used when collapsing the top level menu. All
-	 * "overflowing" items will be added below this. The item command will be
-	 * ignored. If set to null, the default item with a downwards arrow is used.
-	 * 
-	 * The item command (if specified) is ignored.
-	 * 
-	 * @param item
-	 */
-	public void setMoreMenuItem(MenuItem item) {
-	    if (item != null) {
-	        moreItem = item;
-	    } else {
-	        moreItem = new MenuItemImpl("", null, null);
-	    }
-	    markAsDirty();
-	}
 
-	/**
-	 * Get the MenuItem used as the collapse menu item.
-	 * 
-	 * @return
-	 */
-	public MenuItem getMoreMenuItem() {
-	    return moreItem;
-	}
-	
-	/**
-	 * Using this method menubar can be put into a special mode where top level
-	 * menus opens without clicking on the menu, but automatically when mouse
-	 * cursor is moved over the menu. In this mode the menu also closes itself
-	 * if the mouse is moved out of the opened menu.
-	 * <p>
-	 * Note, that on touch devices the menu still opens on a click event.
-	 * 
-	 * @param autoOpenTopLevelMenu
-	 *            true if menus should be opened without click, the default is
-	 *            false
-	 */
-	public void setAutoOpen(boolean autoOpenTopLevelMenu) {
-	    if (autoOpenTopLevelMenu != openRootOnHover) {
-	        openRootOnHover = autoOpenTopLevelMenu;
-	        markAsDirty();
-	    }
-	}
+    /**
+     * Set the item that is used when collapsing the top level menu. All
+     * "overflowing" items will be added below this. The item command will be
+     * ignored. If set to null, the default item with a downwards arrow is used.
+     * 
+     * The item command (if specified) is ignored.
+     * 
+     * @param item
+     */
+    public void setMoreMenuItem(MenuItem item) {
+        if (item != null) {
+            moreItem = item;
+        } else {
+            moreItem = new MenuItemImpl("", null, null);
+        }
+        markAsDirty();
+    }
 
-	/**
-	 * Detects whether the menubar is in a mode where top level menus are
-	 * automatically opened when the mouse cursor is moved over the menu.
-	 * Normally root menu opens only by clicking on the menu. Submenus always
-	 * open automatically.
-	 * 
-	 * @return true if the root menus open without click, the default is false
-	 */
-	public boolean isAutoOpen() {
-	    return openRootOnHover;
-	}
+    /**
+     * Get the MenuItem used as the collapse menu item.
+     * 
+     * @return
+     */
+    public MenuItem getMoreMenuItem() {
+        return moreItem;
+    }
+
+    /**
+     * Using this method menubar can be put into a special mode where top level
+     * menus opens without clicking on the menu, but automatically when mouse
+     * cursor is moved over the menu. In this mode the menu also closes itself
+     * if the mouse is moved out of the opened menu.
+     * <p>
+     * Note, that on touch devices the menu still opens on a click event.
+     * 
+     * @param autoOpenTopLevelMenu
+     *            true if menus should be opened without click, the default is
+     *            false
+     */
+    public void setAutoOpen(boolean autoOpenTopLevelMenu) {
+        if (autoOpenTopLevelMenu != openRootOnHover) {
+            openRootOnHover = autoOpenTopLevelMenu;
+            markAsDirty();
+        }
+    }
+
+    /**
+     * Detects whether the menubar is in a mode where top level menus are
+     * automatically opened when the mouse cursor is moved over the menu.
+     * Normally root menu opens only by clicking on the menu. Submenus always
+     * open automatically.
+     * 
+     * @return true if the root menus open without click, the default is false
+     */
+    public boolean isAutoOpen() {
+        return openRootOnHover;
+    }
 
     @Override
     public void readDesign(Element design, DesignContext designContext) {
@@ -430,62 +429,62 @@ public class MenuBar extends AbstractComponent implements Menu, LegacyComponent,
         return result;
     }
 
-	/**** Delegates to AbstractMenu ****/
-    
+    /**** Delegates to AbstractMenu ****/
+
     private Menu menu = new AbstractMenu(this);
-    
-	@Override
-	public MenuItem addItem(String caption, Command command) {
-		return menu.addItem(caption, command);
-	}
 
-	@Override
-	public MenuItem addItem(String caption, Resource icon, Command command) {
-		return menu.addItem(caption, icon, command);
-	}
+    @Override
+    public MenuItem addItem(String caption, Command command) {
+        return menu.addItem(caption, command);
+    }
 
-	@Override
-	public MenuItem addItemBefore(String caption, Resource icon,
-			Command command, MenuItem itemToAddBefore) {
-		return menu.addItemBefore(caption, icon, command, itemToAddBefore);
-	}
+    @Override
+    public MenuItem addItem(String caption, Resource icon, Command command) {
+        return menu.addItem(caption, icon, command);
+    }
 
-	@Override
-	public List<MenuItem> getItems() {
-		return menu.getItems();
-	}
+    @Override
+    public MenuItem addItemBefore(String caption, Resource icon,
+            Command command, MenuItem itemToAddBefore) {
+        return menu.addItemBefore(caption, icon, command, itemToAddBefore);
+    }
 
-	@Override
-	public void removeItem(MenuItem item) {
-		menu.removeItem(item);
-	}
+    @Override
+    public List<MenuItem> getItems() {
+        return menu.getItems();
+    }
 
-	@Override
-	public void removeItems() {
-		menu.removeItems();
-	}
+    @Override
+    public void removeItem(MenuItem item) {
+        menu.removeItem(item);
+    }
 
-	@Override
-	public int getSize() {
-		return menu.getSize();
-	}
+    @Override
+    public void removeItems() {
+        menu.removeItems();
+    }
 
-	@Override
-	public void setHtmlContentAllowed(boolean htmlContentAllowed) {
-		menu.setHtmlContentAllowed(htmlContentAllowed);
-	}
+    @Override
+    public int getSize() {
+        return menu.getSize();
+    }
 
-	@Override
-	public boolean isHtmlContentAllowed() {
-		return menu.isHtmlContentAllowed();
-	}
-    
-	/**** End of deletates to AbstractMenu ****/
+    @Override
+    public void setHtmlContentAllowed(boolean htmlContentAllowed) {
+        menu.setHtmlContentAllowed(htmlContentAllowed);
+    }
 
-//    public class MenuItem extends MenuItemImpl implements Serializable {
-//		public MenuItem(String caption, Resource icon, Command command) {
-//			super(caption, icon, command);
-//			//  Auto-generated constructor stub
-//		}
-//    }    
+    @Override
+    public boolean isHtmlContentAllowed() {
+        return menu.isHtmlContentAllowed();
+    }
+
+    /**** End of deletates to AbstractMenu ****/
+
+    // public class MenuItem extends MenuItemImpl implements Serializable {
+    // public MenuItem(String caption, Resource icon, Command command) {
+    // super(caption, icon, command);
+    // // Auto-generated constructor stub
+    // }
+    // }
 }// class MenuBar
