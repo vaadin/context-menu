@@ -5,12 +5,12 @@
     <groupId>com.vaadin.addon</groupId>
     <artifactId>vaadin-context-menu</artifactId>
     <packaging>jar</packaging>
-    <version>0.7</version>
+    <version>0.8-SNAPSHOT</version>
     <name>Vaadin ContextMenu</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.6-SNAPSHOT</vaadin.version>
+        <vaadin.version>7.7.0</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
         <!-- ZIP Manifest fields -->

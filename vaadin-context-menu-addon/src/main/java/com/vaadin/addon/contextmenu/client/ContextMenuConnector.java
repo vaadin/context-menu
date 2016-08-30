@@ -168,6 +168,7 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 	}
 
 	private void showMenu(int eventX, int eventY) {
+                dummyRootMenuBar.setSelected(dummyRootMenuBar.getItems().get(0));
 		dummyRootMenuBar.showChildMenuAt(dummyRootMenuBar.getItems().get(0),
 				eventY, eventX);
 	}
