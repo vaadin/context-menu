@@ -4,28 +4,28 @@ import com.vaadin.client.ApplicationConnection;
 import com.vaadin.client.ui.VOverlay;
 
 /**
- * FIXME: This is needed to somehow resolve the application connection issue.
- * A real solution is needed.
+ * FIXME: This is needed to somehow resolve the application connection issue. A
+ * real solution is needed.
  */
 public class MyVOverlay extends VOverlay {
-	private static ApplicationConnection ac_static;
-	
-	@SuppressWarnings("deprecation")
-	public MyVOverlay(boolean autoHide, boolean modal, boolean showShadow) {
-		super(autoHide, modal, showShadow);
-	}
+    private static ApplicationConnection ac_static;
 
-	public MyVOverlay() {
-		super();
-	}
-	
-	public static void setApplicationConnection(ApplicationConnection ac) {
-//		this.ac = ac;
-		ac_static = ac;
-	}
-	
-	@Override
-	protected ApplicationConnection getApplicationConnection() {
-		return ac_static;
-	}
+    @SuppressWarnings("deprecation")
+    public MyVOverlay(boolean autoHide, boolean modal, boolean showShadow) {
+        super(autoHide, modal, showShadow);
+    }
+
+    public MyVOverlay() {
+        super();
+    }
+
+    public static void setApplicationConnection(ApplicationConnection ac) {
+        // this.ac = ac;
+        ac_static = ac;
+    }
+
+    @Override
+    protected ApplicationConnection getApplicationConnection() {
+        return ac_static;
+    }
 }

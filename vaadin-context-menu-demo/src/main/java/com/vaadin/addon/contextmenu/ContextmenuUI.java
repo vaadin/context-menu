@@ -17,9 +17,9 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings({"serial", "unchecked"})
+@SuppressWarnings({ "serial", "unchecked" })
 @Theme("contextmenu")
-//@PreserveOnRefresh
+// @PreserveOnRefresh
 public class ContextmenuUI extends UI {
 
     @WebServlet(value = "/*", asyncSupported = true)
@@ -48,7 +48,8 @@ public class ContextmenuUI extends UI {
         contextMenu.addContextMenuOpenListener(new ContextMenuOpenListener() {
             @Override
             public void onContextMenuOpen(ContextMenuOpenEvent event) {
-                Notification.show("Context menu on" + event.getSourceComponent().getCaption());
+                Notification.show("Context menu on"
+                        + event.getSourceComponent().getCaption());
             }
         });
 
@@ -66,20 +67,25 @@ public class ContextmenuUI extends UI {
         grid.addColumn("Row");
 
         contextMenu2.addContextMenuOpenListener(e -> {
-            GridContextClickEvent gridE = (GridContextClickEvent) e.getContextClickEvent();
+            GridContextClickEvent gridE = (GridContextClickEvent) e
+                    .getContextClickEvent();
 
             Object itemId = grid.getContainerDataSource().addItem();
             Item item = grid.getContainerDataSource().getItem(itemId);
-            item.getItemProperty("Section").setValue(String.valueOf(gridE.getSection()));
+            item.getItemProperty("Section")
+                    .setValue(String.valueOf(gridE.getSection()));
             Object propertyId = gridE.getPropertyId();
 
-            item.getItemProperty("Column").setValue(propertyId != null ? propertyId.toString() : "??");
+            item.getItemProperty("Column").setValue(
+                    propertyId != null ? propertyId.toString() : "??");
             int rowIndex = gridE.getRowIndex();
-            item.getItemProperty("Row").setValue(rowIndex < 0 ? "Outside rows" : String.valueOf(rowIndex));
+            item.getItemProperty("Row").setValue(
+                    rowIndex < 0 ? "Outside rows" : String.valueOf(rowIndex));
 
             contextMenu2.removeItems();
-            contextMenu2.addItem("Called from column " + propertyId
-                            + " on row " + gridE.getRowIndex(),
+            contextMenu2.addItem(
+                    "Called from column " + propertyId + " on row "
+                            + gridE.getRowIndex(),
                     f -> Notification.show("did something"));
 
         });
@@ -92,8 +98,10 @@ public class ContextmenuUI extends UI {
 
         GridContextMenu gridContextMenu = new GridContextMenu(grid);
 
-        grid.addColumn("column 1").setHeaderCaption("Column 1(right-click here)");
-        grid.addColumn("column 2").setHeaderCaption("Column 2(right-click here)");
+        grid.addColumn("column 1")
+                .setHeaderCaption("Column 1(right-click here)");
+        grid.addColumn("column 2")
+                .setHeaderCaption("Column 2(right-click here)");
         ;
 
         gridContextMenu.addGridHeaderContextMenuListener(e -> {
@@ -102,7 +110,8 @@ public class ContextmenuUI extends UI {
                 Object itemId = grid.getContainerDataSource().addItem();
                 grid.getContainerDataSource().getItem(itemId)
                         .getItemProperty("column 1")
-                        .setValue("added from header column " + e.getPropertyId());
+                        .setValue("added from header column "
+                                + e.getPropertyId());
             });
         });
 
@@ -146,10 +155,9 @@ public class ContextmenuUI extends UI {
         if (menu instanceof ContextMenu)
             ((ContextMenu) menu).addSeparator();
 
-        MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>",
-                e -> {
-                    Notification.show("icon");
-                });
+        MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>", e -> {
+            Notification.show("icon");
+        });
         item4.setIcon(FontAwesome.ADJUST);
         item4.setDescription("Test tooltip");
 

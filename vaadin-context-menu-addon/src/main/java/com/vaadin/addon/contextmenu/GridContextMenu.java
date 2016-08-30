@@ -21,7 +21,8 @@ public class GridContextMenu extends ContextMenu {
         addContextMenuOpenListener(new ContextMenuOpenListener() {
             @Override
             public void onContextMenuOpen(ContextMenuOpenEvent event) {
-                if (event.getContextClickEvent() instanceof GridContextClickEvent) {
+                if (event
+                        .getContextClickEvent() instanceof GridContextClickEvent) {
                     GridContextClickEvent gridEvent = (GridContextClickEvent) event
                             .getContextClickEvent();
                     if (gridEvent.getSection() == section) {
@@ -48,12 +49,13 @@ public class GridContextMenu extends ContextMenu {
         addGridSectionContextMenuListener(Section.BODY, listener);
     }
 
-    public interface GridContextMenuOpenListener extends EventListener, Serializable {
+    public interface GridContextMenuOpenListener
+            extends EventListener, Serializable {
 
         public void onContextMenuOpen(GridContextMenuOpenEvent event);
 
-        public static class GridContextMenuOpenEvent extends
-                ContextMenuOpenEvent {
+        public static class GridContextMenuOpenEvent
+                extends ContextMenuOpenEvent {
             private final Object itemId;
             private final int rowIndex;
             private final Object propertyId;
