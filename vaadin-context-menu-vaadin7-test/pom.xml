@@ -3,10 +3,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vaadin.addon</groupId>
-    <artifactId>vaadin-context-menu-demo</artifactId>
+    <artifactId>vaadin-context-menu-vaadin7-test</artifactId>
     <packaging>war</packaging>
     <version>0.8-SNAPSHOT</version>
-    <name>Vaadin ContextMenu Demo</name>
+    <name>Vaadin ContextMenu Test for Vaadin 7 component compatibility</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -99,15 +99,11 @@
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server</artifactId>
+            <artifactId>vaadin-compatibility-server</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-push</artifactId>
+            <artifactId>vaadin-compatibility-client</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -135,38 +131,9 @@
             </plugin>
 
             <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>2.4.1</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <!-- Clean-up widgetset required for "inplace" 
-                                compilation -->
-                            <directory>${basedir}/src/main/webapp/VAADIN/widgetsets</directory>
-                        </fileset>
-                        <fileset>
-                            <!-- Clean-up gwt cache -->
-                            <directory>${basedir}/src/main/webapp/VAADIN/gwt-unitCache</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
-                    <packagingExcludes>
-                        **/VAADIN/gwt-unitCache/**,
-                        **/VAADIN/widgetsets/WEB-INF/**,
-                        **/WEB-INF/lib/servlet-api-*.jar,
-                        **/WEB-INF/lib/vaadin-client-*.jar,
-                        **/WEB-INF/lib/jetty-*.jar,
-                        **/WEB-INF/lib/ant-*.jar,
-                        **/WEB-INF/classes/gwt-unitCache/**,
-                        **/WEB-INF/classes/themes/**,
-                        **/WEB-INF/classes/widgetsets/**
-                    </packagingExcludes>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
@@ -177,22 +144,9 @@
                 <version>${vaadin.plugin.version}</version>
                 <configuration>
                     <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                    <webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets</webappDirectory>
-                    <hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets</hostedWebapp>
-                    <noServer>true</noServer>
-                    <persistentunitcachedir>${basedir}/target/tmp/gwt-unitCache</persistentunitcachedir>
-                    <compileReport>true</compileReport>
-                    <strict>true</strict>
-                    <runTarget>http://localhost:8080/context-menu</runTarget>
                 </configuration>
                 <executions>
-                    <!-- You are free to mark this as permanently ignored 
-                        in Eclipse -->
                     <execution>
-                        <configuration>
-                            <!-- if you don't specify any modules, the plugin 
-                                will find them -->
-                        </configuration>
                         <goals>
                             <goal>resources</goal>
                             <goal>update-widgetset</goal>

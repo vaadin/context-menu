@@ -11,6 +11,7 @@
 	<modules>
 		<module>vaadin-context-menu-addon</module>
 		<module>vaadin-context-menu-demo</module>
+		<module>vaadin-context-menu-vaadin7-test</module>
 	</modules>
 
 </project>

@@ -1,36 +1,34 @@
-package com.vaadin.addon.contextmenu;
+package com.vaadin.v7.addon.contextmenu;
 
 import java.io.Serializable;
 import java.util.EventListener;
 
+import com.vaadin.addon.contextmenu.ContextMenu;
 import com.vaadin.addon.contextmenu.ContextMenu.ContextMenuOpenListener.ContextMenuOpenEvent;
-import com.vaadin.addon.contextmenu.GridContextMenu.GridContextMenuOpenListener.GridContextMenuOpenEvent;
-import com.vaadin.shared.ui.grid.GridConstants.Section;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.Column;
-import com.vaadin.ui.Grid.GridContextClickEvent;
+import com.vaadin.v7.addon.contextmenu.GridContextMenu.GridContextMenuOpenListener.GridContextMenuOpenEvent;
+import com.vaadin.v7.shared.ui.grid.GridConstants.Section;
+import com.vaadin.v7.ui.Grid;
+import com.vaadin.v7.ui.Grid.GridContextClickEvent;
 
 @SuppressWarnings("serial")
-public class GridContextMenu<T> extends ContextMenu {
+public class GridContextMenu extends ContextMenu {
 
-    public GridContextMenu(Grid<T> parentComponent) {
+    public GridContextMenu(Grid parentComponent) {
         super(parentComponent, true);
     }
 
     private void addGridSectionContextMenuListener(final Section section,
-            final GridContextMenuOpenListener<T> listener) {
+            final GridContextMenuOpenListener listener) {
         addContextMenuOpenListener(new ContextMenuOpenListener() {
             @Override
             public void onContextMenuOpen(ContextMenuOpenEvent event) {
                 if (event
                         .getContextClickEvent() instanceof GridContextClickEvent) {
-                    @SuppressWarnings("unchecked")
-                    GridContextClickEvent<T> gridEvent = (GridContextClickEvent<T>) event
+                    GridContextClickEvent gridEvent = (GridContextClickEvent) event
                             .getContextClickEvent();
                     if (gridEvent.getSection() == section) {
-                        listener.onContextMenuOpen(
-                                new GridContextMenuOpenEvent<T>(
-                                        GridContextMenu.this, gridEvent));
+                        listener.onContextMenuOpen(new GridContextMenuOpenEvent(
+                                GridContextMenu.this, gridEvent));
                     }
                 }
             }
@@ -38,51 +36,51 @@ public class GridContextMenu<T> extends ContextMenu {
     }
 
     public void addGridHeaderContextMenuListener(
-            GridContextMenuOpenListener<T> listener) {
+            GridContextMenuOpenListener listener) {
         addGridSectionContextMenuListener(Section.HEADER, listener);
     }
 
     public void addGridFooterContextMenuListener(
-            GridContextMenuOpenListener<T> listener) {
+            GridContextMenuOpenListener listener) {
         addGridSectionContextMenuListener(Section.FOOTER, listener);
     }
 
     public void addGridBodyContextMenuListener(
-            GridContextMenuOpenListener<T> listener) {
+            GridContextMenuOpenListener listener) {
         addGridSectionContextMenuListener(Section.BODY, listener);
     }
 
-    public interface GridContextMenuOpenListener<T>
+    public interface GridContextMenuOpenListener
             extends EventListener, Serializable {
 
-        public void onContextMenuOpen(GridContextMenuOpenEvent<T> event);
+        public void onContextMenuOpen(GridContextMenuOpenEvent event);
 
-        public static class GridContextMenuOpenEvent<T>
+        public static class GridContextMenuOpenEvent
                 extends ContextMenuOpenEvent {
-            private final Object item;
+            private final Object itemId;
             private final int rowIndex;
-            private final Column<?, ?> column;
+            private final Object propertyId;
             private final Section section;
 
             public GridContextMenuOpenEvent(ContextMenu contextMenu,
-                    GridContextClickEvent<T> contextClickEvent) {
+                    GridContextClickEvent contextClickEvent) {
                 super(contextMenu, contextClickEvent);
-                item = contextClickEvent.getItem();
+                itemId = contextClickEvent.getItemId();
                 rowIndex = contextClickEvent.getRowIndex();
-                column = contextClickEvent.getColumn();
+                propertyId = contextClickEvent.getPropertyId();
                 section = contextClickEvent.getSection();
             }
 
-            public Object getItem() {
-                return item;
+            public Object getItemId() {
+                return itemId;
             }
 
             public int getRowIndex() {
                 return rowIndex;
             }
 
-            public Column<?, ?> getColumn() {
-                return column;
+            public Object getPropertyId() {
+                return propertyId;
             }
 
             public Section getSection() {

@@ -11,8 +11,8 @@ public class MyVOverlay extends VOverlay {
     private static ApplicationConnection ac_static;
 
     @SuppressWarnings("deprecation")
-    public MyVOverlay(boolean autoHide, boolean modal, boolean showShadow) {
-        super(autoHide, modal, showShadow);
+    public MyVOverlay(boolean autoHide, boolean modal) {
+        super(autoHide, modal);
     }
 
     public MyVOverlay() {
