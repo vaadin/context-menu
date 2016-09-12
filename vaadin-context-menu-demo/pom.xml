@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vaadin.addon</groupId>
     <artifactId>vaadin-context-menu-demo</artifactId>
@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.7.0</vaadin.version>
+        <vaadin.version>8.0.0.alpha2</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
     </properties>
 
@@ -18,14 +18,14 @@
         <name>Vaadin Ltd</name>
         <url>https://github.com/vaadin/context-menu/</url>
     </organization>
-    
+
     <scm>
         <url>git://github.com/vaadin/context-menu.git</url>
         <connection>scm:git:git://github.com/vaadin/context-menu.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:vaadin/context-menu.git</developerConnection>
         <tag>Vaadin ContextMenu Demo</tag>
     </scm>
-        
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/vaadin/context-menu/issues</url>
@@ -45,6 +45,11 @@
             <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
         <repository>
+            <id>vaadin-prereleases</id>
+            <name>Vaadin Pre-releases</name>
+            <url>https://maven.vaadin.com/vaadin-prereleases</url>
+        </repository>
+        <repository>
             <id>vaadin-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
             <releases>
@@ -57,6 +62,11 @@
     </repositories>
 
     <pluginRepositories>
+        <pluginRepository>
+            <id>vaadin-prereleases</id>
+            <name>Vaadin Pre-releases</name>
+            <url>https://maven.vaadin.com/vaadin-prereleases</url>
+        </pluginRepository>
         <pluginRepository>
             <id>vaadin-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
@@ -89,11 +99,20 @@
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-compatibility-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-compatibility-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
             <artifactId>vaadin-push</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiler</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -126,7 +145,8 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <!-- Clean-up widgetset required for "inplace" compilation -->
+                            <!-- Clean-up widgetset required for "inplace" 
+                                compilation -->
                             <directory>${basedir}/src/main/webapp/VAADIN/widgetsets</directory>
                         </fileset>
                         <fileset>
@@ -171,10 +191,12 @@
                     <runTarget>http://localhost:8080/context-menu</runTarget>
                 </configuration>
                 <executions>
-                    <!-- You are free to mark this as permanently ignored in Eclipse -->
+                    <!-- You are free to mark this as permanently ignored 
+                        in Eclipse -->
                     <execution>
                         <configuration>
-                            <!-- if you don't specify any modules, the plugin will find them -->
+                            <!-- if you don't specify any modules, the plugin 
+                                will find them -->
                         </configuration>
                         <goals>
                             <goal>resources</goal>
@@ -186,9 +208,9 @@
             </plugin>
 
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>8.1.16.v20140903</version>
+                <version>9.2.19.v20160908</version>
                 <configuration>
                     <webApp>
                         <contextPath>/context-menu</contextPath>
@@ -198,10 +220,11 @@
             </plugin>
 
         </plugins>
-	
+
         <pluginManagement>
             <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <!--This plugin's configuration is used to store Eclipse 
+                    m2e settings only. It has no influence on the Maven build itself. -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
