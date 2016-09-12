@@ -5,21 +5,16 @@ import javax.servlet.annotation.WebServlet;
 import com.vaadin.addon.contextmenu.ContextMenu.ContextMenuOpenListener;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.Item;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Grid.GridContextClickEvent;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings({ "serial", "unchecked" })
 @Theme("contextmenu")
-// @PreserveOnRefresh
 public class ContextmenuUI extends UI {
 
     @WebServlet(value = "/*", asyncSupported = true)
@@ -53,87 +48,11 @@ public class ContextmenuUI extends UI {
             }
         });
 
-        layout.addComponent(createGrid1());
-        layout.addComponent(createGrid2());
+        layout.addComponent(new GridWithGenericListener());
+        layout.addComponent(new GridWithGridListener());
     }
 
-    private Component createGrid1() {
-        Grid grid = new Grid();
 
-        ContextMenu contextMenu2 = new ContextMenu(grid, true);
-
-        grid.addColumn("Section");
-        grid.addColumn("Column");
-        grid.addColumn("Row");
-
-        contextMenu2.addContextMenuOpenListener(e -> {
-            GridContextClickEvent gridE = (GridContextClickEvent) e
-                    .getContextClickEvent();
-
-            Object itemId = grid.getContainerDataSource().addItem();
-            Item item = grid.getContainerDataSource().getItem(itemId);
-            item.getItemProperty("Section")
-                    .setValue(String.valueOf(gridE.getSection()));
-            Object propertyId = gridE.getPropertyId();
-
-            item.getItemProperty("Column").setValue(
-                    propertyId != null ? propertyId.toString() : "??");
-            int rowIndex = gridE.getRowIndex();
-            item.getItemProperty("Row").setValue(
-                    rowIndex < 0 ? "Outside rows" : String.valueOf(rowIndex));
-
-            contextMenu2.removeItems();
-            contextMenu2.addItem(
-                    "Called from column " + propertyId + " on row "
-                            + gridE.getRowIndex(),
-                    f -> Notification.show("did something"));
-
-        });
-
-        return grid;
-    }
-
-    private Component createGrid2() {
-        Grid grid = new Grid();
-
-        GridContextMenu gridContextMenu = new GridContextMenu(grid);
-
-        grid.addColumn("column 1")
-                .setHeaderCaption("Column 1(right-click here)");
-        grid.addColumn("column 2")
-                .setHeaderCaption("Column 2(right-click here)");
-        ;
-
-        gridContextMenu.addGridHeaderContextMenuListener(e -> {
-            gridContextMenu.removeItems();
-            gridContextMenu.addItem("Add Item", k -> {
-                Object itemId = grid.getContainerDataSource().addItem();
-                grid.getContainerDataSource().getItem(itemId)
-                        .getItemProperty("column 1")
-                        .setValue("added from header column "
-                                + e.getPropertyId());
-            });
-        });
-
-        gridContextMenu.addGridBodyContextMenuListener(e -> {
-            gridContextMenu.removeItems();
-            final Object itemId = e.getItemId();
-            if (itemId == null) {
-                gridContextMenu.addItem("Add Item", k -> {
-                    Object newItemId = grid.getContainerDataSource().addItem();
-                    grid.getContainerDataSource().getItem(newItemId)
-                            .getItemProperty("column 1")
-                            .setValue("added from empty space");
-                });
-            } else {
-                gridContextMenu.addItem("Remove this row", k -> {
-                    grid.getContainerDataSource().removeItem(itemId);
-                });
-            }
-        });
-
-        return grid;
-    }
 
     private void fillMenu(Menu menu) {
         final MenuItem item = menu.addItem("Checkable", e -> {
@@ -152,8 +71,9 @@ public class ContextmenuUI extends UI {
         });
         item3.setVisible(false);
 
-        if (menu instanceof ContextMenu)
+        if (menu instanceof ContextMenu) {
             ((ContextMenu) menu).addSeparator();
+        }
 
         MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>", e -> {
             Notification.show("icon");
