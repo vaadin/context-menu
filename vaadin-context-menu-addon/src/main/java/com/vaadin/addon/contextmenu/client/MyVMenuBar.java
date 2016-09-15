@@ -25,7 +25,7 @@ public class MyVMenuBar extends VMenuBar {
 
     @Override
     protected VOverlay createOverlay() {
-        return new MyVOverlay(true, false, true);
+        return new MyVOverlay(true, false);
     }
 
     // overridden to be visible for the connector
