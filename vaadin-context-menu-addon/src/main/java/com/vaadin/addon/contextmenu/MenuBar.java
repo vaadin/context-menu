@@ -2,13 +2,13 @@ package com.vaadin.addon.contextmenu;
 
 /*
  * Copyright 2000-2014 Vaadin Ltd.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -209,7 +209,7 @@ public class MenuBar extends AbstractComponent
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.vaadin.ui.Component.Focusable#setTabIndex(int)
      */
     @Override
@@ -227,13 +227,14 @@ public class MenuBar extends AbstractComponent
     public void writeDesign(Element design, DesignContext designContext) {
         super.writeDesign(design, designContext);
         for (MenuItem item : getItems()) {
-            design.appendChild(createMenuElement(item));
+            design.appendChild(createMenuElement(item, designContext));
         }
 
         // in many cases there seems to be an empty more menu item
         if (getMoreMenuItem() != null
                 && !getMoreMenuItem().getText().isEmpty()) {
-            Element moreMenu = createMenuElement(getMoreMenuItem());
+            Element moreMenu = createMenuElement(getMoreMenuItem(),
+                    designContext);
             moreMenu.attr("more", "");
             design.appendChild(moreMenu);
         }
@@ -243,34 +244,41 @@ public class MenuBar extends AbstractComponent
         }
     }
 
-    protected Element createMenuElement(MenuItem item) {
+    protected Element createMenuElement(MenuItem item,
+            DesignContext designContext) {
         Element menuElement = new Element(Tag.valueOf("menu"), "");
         // Defaults
         MenuItem def = new MenuItemImpl("", null, null);
 
         Attributes attr = menuElement.attributes();
         DesignAttributeHandler.writeAttribute("icon", attr, item.getIcon(),
-                def.getIcon(), Resource.class);
+                def.getIcon(), Resource.class, designContext);
         DesignAttributeHandler.writeAttribute("disabled", attr,
-                !item.isEnabled(), !def.isEnabled(), boolean.class);
+                !item.isEnabled(), !def.isEnabled(), boolean.class,
+                designContext);
         DesignAttributeHandler.writeAttribute("visible", attr, item.isVisible(),
-                def.isVisible(), boolean.class);
+                def.isVisible(), boolean.class, designContext);
         DesignAttributeHandler.writeAttribute("separator", attr,
-                item.isSeparator(), def.isSeparator(), boolean.class);
+                item.isSeparator(), def.isSeparator(), boolean.class,
+                designContext);
         DesignAttributeHandler.writeAttribute("checkable", attr,
-                item.isCheckable(), def.isCheckable(), boolean.class);
+                item.isCheckable(), def.isCheckable(), boolean.class,
+                designContext);
         DesignAttributeHandler.writeAttribute("checked", attr, item.isChecked(),
-                def.isChecked(), boolean.class);
+                def.isChecked(), boolean.class, designContext);
         DesignAttributeHandler.writeAttribute("description", attr,
-                item.getDescription(), def.getDescription(), String.class);
+                item.getDescription(), def.getDescription(), String.class,
+                designContext);
         DesignAttributeHandler.writeAttribute("style-name", attr,
-                item.getStyleName(), def.getStyleName(), String.class);
+                item.getStyleName(), def.getStyleName(), String.class,
+                designContext);
 
         menuElement.append(item.getText());
 
         if (item.hasChildren()) {
             for (MenuItem subMenu : item.getChildren()) {
-                menuElement.appendChild(createMenuElement(subMenu));
+                menuElement
+                        .appendChild(createMenuElement(subMenu, designContext));
             }
         }
 
@@ -349,9 +357,9 @@ public class MenuBar extends AbstractComponent
      * Set the item that is used when collapsing the top level menu. All
      * "overflowing" items will be added below this. The item command will be
      * ignored. If set to null, the default item with a downwards arrow is used.
-     * 
+     *
      * The item command (if specified) is ignored.
-     * 
+     *
      * @param item
      */
     public void setMoreMenuItem(MenuItem item) {
@@ -365,7 +373,7 @@ public class MenuBar extends AbstractComponent
 
     /**
      * Get the MenuItem used as the collapse menu item.
-     * 
+     *
      * @return
      */
     public MenuItem getMoreMenuItem() {
@@ -379,7 +387,7 @@ public class MenuBar extends AbstractComponent
      * if the mouse is moved out of the opened menu.
      * <p>
      * Note, that on touch devices the menu still opens on a click event.
-     * 
+     *
      * @param autoOpenTopLevelMenu
      *            true if menus should be opened without click, the default is
      *            false
@@ -396,7 +404,7 @@ public class MenuBar extends AbstractComponent
      * automatically opened when the mouse cursor is moved over the menu.
      * Normally root menu opens only by clicking on the menu. Submenus always
      * open automatically.
-     * 
+     *
      * @return true if the root menus open without click, the default is false
      */
     public boolean isAutoOpen() {
