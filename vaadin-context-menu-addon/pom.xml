@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.vaadin.addon</groupId>
+    <groupId>com.vaadin</groupId>
     <artifactId>vaadin-context-menu</artifactId>
     <packaging>jar</packaging>
     <version>0.8-SNAPSHOT</version>
@@ -143,7 +143,7 @@
                             <!-- Package format version - do not change -->
                             <Vaadin-Package-Version>1</Vaadin-Package-Version>
                             <Vaadin-License-Title>${Vaadin-License-Title}</Vaadin-License-Title>
-                            <Vaadin-Widgetsets>com.vaadin.addon.contextmenu.WidgetSet</Vaadin-Widgetsets>
+                            <Vaadin-Widgetsets>com.vaadin.contextmenu.WidgetSet</Vaadin-Widgetsets>
                         </manifestEntries>
                     </archive>
                 </configuration>
