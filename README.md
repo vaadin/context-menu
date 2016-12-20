@@ -1,6 +1,6 @@
 # Vaadin ContextMenu Add-on 
 
-Vaadin ContextMenu is an UI component add-on for Vaadin 7.
+Vaadin ContextMenu is an UI component add-on for [Vaadin Framework](https://github.com/vaadin/framework).
 
 ## Online demo
 
@@ -22,12 +22,12 @@ To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
 
-### Version 0.7
+### Version 0.7 - Latest version for Vaadin Framework 7
  - Basic support for component context menu everywhere
  - Basic code examples
  - Use ContextClickEvent API introduced in Vaadin 7.6
  
-### Version 2.0.0.beta1
+### Version 2.0.0.beta1 - Latest version for Vaadin Framework 8
  - Support for Vaadin Framework 8.0.0.beta1
  - Renamed the groupId to `com.vaadin` from `com.vaadin.addon
  - Renamed the packaging to `com.vaadin.contextmenu` from `com.vaadin.addon.contextmenu`
