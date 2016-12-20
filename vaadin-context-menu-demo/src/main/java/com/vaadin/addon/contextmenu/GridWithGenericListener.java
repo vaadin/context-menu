@@ -3,7 +3,7 @@ package com.vaadin.addon.contextmenu;
 import java.util.Collections;
 
 import com.vaadin.addon.contextmenu.ContextMenu.ContextMenuOpenListener.ContextMenuOpenEvent;
-import com.vaadin.server.data.ListDataProvider;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Notification;
 
@@ -18,9 +18,9 @@ public class GridWithGenericListener extends Grid<String[]> {
 
         ContextMenu contextMenu2 = new ContextMenu(this, true);
         setHeightByRows(3);
-        addColumn(FIRST_NAME, arr -> arr[0]);
-        addColumn(LAST_NAME, arr -> arr[1]);
-        addColumn(SHOE_SIZE, arr -> arr[2]);
+        addColumn(arr -> arr[0]).setCaption(FIRST_NAME);
+        addColumn(arr -> arr[1]).setCaption(LAST_NAME);
+        addColumn(arr -> arr[2]).setCaption(SHOE_SIZE);
 
         ListDataProvider<String[]> ds = new ListDataProvider<>(Collections
                 .singletonList(new String[] { "John", "Doe", "57" }));
