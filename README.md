@@ -26,17 +26,12 @@ To see the demo, navigate to http://localhost:8080/
  - Basic support for component context menu everywhere
  - Basic code examples
  - Use ContextClickEvent API introduced in Vaadin 7.6
-
-## Roadmap
-
-### Version 0.8
-- Make the best demo ever(sampler)
-
-### Version 0.9
-- Get feedback, improve
-
-### Version 1.0
-- Production-quality release
+ 
+### Version 2.0.0.beta1
+ - Support for Vaadin Framework 8.0.0.beta1
+ - Renamed the groupId to `com.vaadin` from `com.vaadin.addon
+ - Renamed the packaging to `com.vaadin.contextmenu` from `com.vaadin.addon.contextmenu`
+ - Renamed widgetset to `com.vaadin.contextmenu.WidgetSet` from `com.vaadin.addon.contextmenu.WidgetSet`
 
 ### Future plans
 - Unify ContextMenu with MenuBar API
@@ -49,7 +44,7 @@ The issues for this add-on are tracked on its github.com page. All bug reports a
 ## Contributions
 
 Contributions are welcome, but there are no guarantees that they are accepted as such.
-Please contact sami@vaadin.com
+Please contact juha@vaadin.com
 
 ## License & Author
 
