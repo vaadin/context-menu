@@ -120,7 +120,8 @@
                         </goals>
                         <configuration>
                             <instructions>
-                                <Import-Package>org.jsoup.*;version="[1.6.3,2)",*</Import-Package>
+                                <Import-Package>org.jsoup.*;version="[1.6.3,2)",!com.google.gwt.*,!com.vaadin.client.*,*</Import-Package>
+                                <Export-Package>!com.vaadin.addon.contextmenu.client,com.vaadin.addon.contextmenu.*</Export-Package>
                             </instructions>
                         </configuration>
                     </execution>
