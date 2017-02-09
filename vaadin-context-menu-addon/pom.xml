@@ -121,7 +121,7 @@
                         <configuration>
                             <instructions>
                                 <Import-Package>org.jsoup.*;version="[1.6.3,2)",!com.google.gwt.*,!com.vaadin.client.*,*</Import-Package>
-                                <Export-Package>!com.vaadin.addon.contextmenu.client,com.vaadin.addon.contextmenu.*</Export-Package>
+                                <Export-Package>!com.vaadin.contextmenu.client,com.vaadin.contextmenu.*,com.vaadin.v7.contextmenu.*</Export-Package>
                             </instructions>
                         </configuration>
                     </execution>
