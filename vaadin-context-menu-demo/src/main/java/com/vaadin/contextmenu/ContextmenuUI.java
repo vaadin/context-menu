@@ -4,11 +4,8 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.contextmenu.ContextMenu;
-import com.vaadin.contextmenu.Menu;
-import com.vaadin.contextmenu.MenuItem;
 import com.vaadin.contextmenu.ContextMenu.ContextMenuOpenListener;
-import com.vaadin.server.FontAwesome;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
@@ -55,8 +52,6 @@ public class ContextmenuUI extends UI {
         layout.addComponent(new GridWithGridListener());
     }
 
-
-
     private void fillMenu(Menu menu) {
         final MenuItem item = menu.addItem("Checkable", e -> {
             Notification.show("checked: " + e.isChecked());
@@ -81,7 +76,7 @@ public class ContextmenuUI extends UI {
         MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>", e -> {
             Notification.show("icon");
         });
-        item4.setIcon(FontAwesome.ADJUST);
+        item4.setIcon(VaadinIcons.ADJUST);
         item4.setDescription("Test tooltip");
 
         MenuItem item5 = menu.addItem("Custom stylename", e -> {
