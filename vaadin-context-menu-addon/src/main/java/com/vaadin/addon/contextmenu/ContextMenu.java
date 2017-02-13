@@ -13,13 +13,18 @@ import com.vaadin.addon.contextmenu.client.ContextMenuServerRpc;
 import com.vaadin.addon.contextmenu.client.MenuSharedState;
 import com.vaadin.addon.contextmenu.client.MenuSharedState.MenuItemState;
 import com.vaadin.event.ContextClickEvent;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.event.ContextClickEvent.ContextClickNotifier;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ResourceReference;
+import com.vaadin.shared.MouseEventDetails;
+import com.vaadin.shared.MouseEventDetails.MouseButton;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Table;
 import com.vaadin.util.ReflectTools;
 
 @SuppressWarnings("serial")
@@ -63,9 +68,48 @@ public class ContextMenu extends AbstractExtension implements Menu {
      * many components as you wish.
      * 
      * @param component
+     *            the component to set the context menu to
      */
     public void setAsContextMenuOf(ContextClickNotifier component) {
+        /*
+         * Workaround for VScrollTable click handling, which prevents context
+         * clicks from rows when ItemClickListener has been added. (#29)
+         */
+        if (component instanceof Table) {
+            useTableSpecificContextClickListener((Table) component);
+            // For context clicks outside rows (header, footer, body) we still
+            // need the context click listener.
+        }
         component.addContextClickListener(contextClickListener);
+    }
+
+    private void useTableSpecificContextClickListener(final Table table) {
+        table.addItemClickListener(new ItemClickListener() {
+
+            @Override
+            public void itemClick(ItemClickEvent event) {
+                if (event.getButton() == MouseButton.RIGHT) {
+                    MouseEventDetails mouseEventDetails = new MouseEventDetails();
+                    mouseEventDetails.setAltKey(event.isAltKey());
+                    mouseEventDetails.setButton(event.getButton());
+                    mouseEventDetails.setClientX(event.getClientX());
+                    mouseEventDetails.setClientY(event.getClientY());
+                    mouseEventDetails.setCtrlKey(event.isCtrlKey());
+                    mouseEventDetails.setMetaKey(event.isMetaKey());
+                    mouseEventDetails.setRelativeX(event.getRelativeX());
+                    mouseEventDetails.setRelativeY(event.getRelativeY());
+                    mouseEventDetails.setShiftKey(event.isShiftKey());
+                    if (event.isDoubleClick()) {
+                        mouseEventDetails.setType(0x00002);
+                    } else {
+                        mouseEventDetails.setType(0x00001);
+                    }
+
+                    contextClickListener.contextClick(
+                            new ContextClickEvent(table, mouseEventDetails));
+                }
+            }
+        });
     }
 
     public void addContextMenuOpenListener(

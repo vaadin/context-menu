@@ -29,6 +29,14 @@ public class ContextmenuUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
+        if (request.getParameter("treetable") != null) {
+            setContent(new ContextMenuTreeTable());
+        } else {
+            initUI();
+        }
+    }
+
+    private void initUI() {
         final VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
         setContent(layout);
