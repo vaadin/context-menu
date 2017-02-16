@@ -27,8 +27,8 @@ To see the demo, navigate to http://localhost:8080/
  - Basic code examples
  - Use ContextClickEvent API introduced in Vaadin 7.6
  
-### Version 2.0.0.beta1 - Latest version for Vaadin Framework 8
- - Support for Vaadin Framework 8.0.0.beta1
+### Version 2.0 - Latest version for Vaadin Framework 8
+ - Support for Vaadin Framework 8
  - Renamed the groupId to `com.vaadin` from `com.vaadin.addon
  - Renamed the packaging to `com.vaadin.contextmenu` from `com.vaadin.addon.contextmenu`
  - Renamed widgetset to `com.vaadin.contextmenu.WidgetSet` from `com.vaadin.addon.contextmenu.WidgetSet`
