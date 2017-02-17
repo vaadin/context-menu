@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>8.0-SNAPSHOT</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+        <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version>
     </properties>
 
     <organization>
@@ -201,16 +202,12 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.19.v20160908</version>
+                <version>${jetty.plugin.version}</version>
                 <configuration>
-                    <webApp>
-                        <contextPath>/context-menu</contextPath>
-                    </webApp>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <scanIntervalSeconds>3</scanIntervalSeconds>
                 </configuration>
             </plugin>
 
