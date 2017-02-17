@@ -11,6 +11,13 @@ import com.vaadin.v7.ui.Grid;
 import com.vaadin.v7.ui.Grid.GridContextClickEvent;
 
 @SuppressWarnings("serial")
+/**
+ * Compatibility version of ContextMenu to use with v7.Grid in the Framework 8.0
+ * compatibility packages.
+ *
+ * @deprecated To use only for compatibility v7.Grid
+ */
+@Deprecated
 public class GridContextMenu extends ContextMenu {
 
     public GridContextMenu(Grid parentComponent) {
