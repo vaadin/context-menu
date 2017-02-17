@@ -54,15 +54,17 @@ public class ContextMenu extends AbstractExtension implements Menu {
             }
         });
 
-        if (setAsMenuForParentComponent)
+        if (setAsMenuForParentComponent) {
             setAsContextMenuOf(parentComponent);
+        }
     }
 
     /**
      * Sets this as a context menu of the component. You can set one menu to as
      * many components as you wish.
-     * 
+     *
      * @param component
+     *            the component to set the context menu to
      */
     public void setAsContextMenuOf(ContextClickNotifier component) {
         component.addContextClickListener(contextClickListener);
@@ -95,16 +97,18 @@ public class ContextMenu extends AbstractExtension implements Menu {
     }
 
     private List<MenuItemState> convertItemsToState(List<MenuItem> items) {
-        if (items == null || items.size() == 0)
+        if (items == null || items.size() == 0) {
             return null;
+        }
 
-        List<MenuItemState> state = new ArrayList<MenuItemState>();
+        List<MenuItemState> state = new ArrayList<>();
 
         for (MenuItem item : items) {
             MenuItemState menuItemState = new MenuItemState();
 
-            if (!item.isVisible())
+            if (!item.isVisible()) {
                 continue;
+            }
 
             menuItemState.id = item.getId();
             menuItemState.text = item.getText();
@@ -128,6 +132,10 @@ public class ContextMenu extends AbstractExtension implements Menu {
     @Override
     protected MenuSharedState getState() {
         return (MenuSharedState) super.getState();
+    }
+
+    protected ContextClickListener getContextClickListener() {
+        return contextClickListener;
     }
 
     // Should these also be in MenuInterface and then throw exception for
@@ -220,8 +228,8 @@ public class ContextMenu extends AbstractExtension implements Menu {
 
                 this.contextMenu = contextMenu;
                 this.contextClickEvent = contextClickEvent;
-                this.x = contextClickEvent.getClientX();
-                this.y = contextClickEvent.getClientY();
+                x = contextClickEvent.getClientX();
+                y = contextClickEvent.getClientY();
             }
 
             /**

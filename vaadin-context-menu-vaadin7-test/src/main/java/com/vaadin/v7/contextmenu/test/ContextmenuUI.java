@@ -30,11 +30,16 @@ public class ContextmenuUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
-        final VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
-        setContent(layout);
+        if (request.getParameter("treetable") != null) {
+            setContent(new ContextMenuTreeTable());
+        } else {
+            final VerticalLayout layout = new VerticalLayout();
+            layout.setMargin(true);
+            setContent(layout);
 
-        layout.addComponent(createVaadin7Grid());
+            layout.addComponent(createVaadin7Grid());
+        }
+
     }
 
     private Grid createVaadin7Grid() {
