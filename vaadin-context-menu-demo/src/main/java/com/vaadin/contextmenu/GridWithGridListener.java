@@ -12,13 +12,13 @@ public class GridWithGridListener extends Grid<String[]> {
     public GridWithGridListener() {
         setCaption("Grid with Grid specific listener");
         setHeightByRows(3);
-        GridContextMenu<String[]> gridContextMenu = new GridContextMenu<>(this);
+        final GridContextMenu<String[]> gridContextMenu = new GridContextMenu<>(this);
 
         addColumn(arr -> arr[0]).setCaption("Column 1(right-click here)");
         addColumn(arr -> arr[1]).setCaption("Column 2(right-click here)");
 
-        ListDataProvider<String[]> dataSource = new ListDataProvider<>(
-                Collections.singletonList(new String[] { "foo", "bar" }));
+        final ListDataProvider<String[]> dataSource = new ListDataProvider<>(
+                Collections.singletonList(new String[]{"foo", "bar"}));
         setDataProvider(dataSource);
         gridContextMenu.addGridHeaderContextMenuListener(e -> {
             gridContextMenu.removeItems();
@@ -32,16 +32,18 @@ public class GridWithGridListener extends Grid<String[]> {
 
     }
 
-    private static String getText(GridContextMenuOpenEvent<?> e) {
+    private static String getText(final GridContextMenuOpenEvent<String[]> e) {
 
-        Column<?, ?> column = e.getColumn();
-        String columnText;
+        final Column<String[], ?> column = e.getColumn();
+        final String columnText;
         if (column != null) {
             columnText = "'" + column.getCaption() + "'";
         } else {
             columnText = "'?'";
         }
-        return "Context menu for " + e.getSection() + ", column: " + columnText;
+        final String gridCaption = e.getComponent() == null ? "(NULL)" : e.getComponent().getCaption();
+
+        return "Context menu for " + e.getSection() + ", column: " + columnText + ", gridCaption: " + gridCaption;
 
     }
 
