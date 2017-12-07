@@ -3,7 +3,9 @@ package com.vaadin.contextmenu.client;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.vaadin.client.ui.VMenuBar;
 import com.vaadin.client.ui.VOverlay;
 
@@ -270,6 +272,12 @@ public class MyVMenuBar extends VMenuBar {
                 break;
             }
         }
+    }
+    
+    /* Removing default behavior to overcome the situation where the popup is autoclosed after being opened in another location
+     */
+    @Override
+    public void onClose(CloseEvent<PopupPanel> event) {
     }
 
     private void openMenuAndFocusFirstIfPossible(CustomMenuItem menuItem) {
