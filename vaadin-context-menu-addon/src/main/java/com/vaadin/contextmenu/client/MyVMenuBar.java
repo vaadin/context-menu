@@ -273,7 +273,7 @@ public class MyVMenuBar extends VMenuBar {
             }
         }
     }
-    
+
     /* Removing default behavior to overcome the situation where the popup is autoclosed after being opened in another location
      */
     @Override
