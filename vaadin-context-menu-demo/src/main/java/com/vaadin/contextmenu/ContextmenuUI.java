@@ -16,6 +16,7 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings({ "serial", "unchecked" })
 @Theme("contextmenu")
 public class ContextmenuUI extends UI {
+    Button but3=new Button("remove Tooltip");
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class, widgetset = "com.vaadin.contextmenu.demo.DemoWidgetSet")
@@ -50,6 +51,7 @@ public class ContextmenuUI extends UI {
 
         layout.addComponent(new GridWithGenericListener());
         layout.addComponent(new GridWithGridListener());
+        layout.addComponent(but3);
     }
 
     private void fillMenu(Menu menu) {
@@ -62,6 +64,7 @@ public class ContextmenuUI extends UI {
         MenuItem item2 = menu.addItem("Disabled", e -> {
             Notification.show("disabled");
         });
+        item2.setDescription("Disabled item");
         item2.setEnabled(false);
 
         MenuItem item3 = menu.addItem("Invisible", e -> {
@@ -78,7 +81,7 @@ public class ContextmenuUI extends UI {
         });
         item4.setIcon(VaadinIcons.ADJUST);
         item4.setDescription("Test tooltip");
-
+        but3.addClickListener(e->item4.setDescription(""));
         MenuItem item5 = menu.addItem("Custom stylename", e -> {
             Notification.show("stylename");
         });
