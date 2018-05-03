@@ -126,7 +126,7 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
         item.setCheckable(state.checkable);
         item.setChecked(state.checked);
         item.setStyleName(state.styleName);
-        if (state.description != null && !state.description.isEmpty()) {
+        if (state.description != null) {
                     item.getElement()
                             .setAttribute("title", state.description);
             }
