@@ -52,6 +52,7 @@ public class ContextmenuUI extends UI {
         layout.addComponent(new GridWithGenericListener());
         layout.addComponent(new GridWithGridListener());
         layout.addComponent(but3);
+        layout.addComponent(new Button("Remove items from context menu", e->{ contextMenu.removeItems();}));
     }
 
     private void fillMenu(Menu menu) {
