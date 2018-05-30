@@ -22,3 +22,7 @@ nb-configuration.xml
 
 target/
 context-menu-demo/src/main/webapp/VAADIN/widgetsets/
+
+#IDEA
+.idea/
+*.iml
