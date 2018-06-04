@@ -22,12 +22,16 @@ To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
 
-### Version 0.7 - Latest version for Vaadin Framework 7
+### Version 2.1.0 - Latest version for Vaadin Framework 8
+ - Bugfixes
+ - HTML tooltips support
+ 
+### Version 0.7.5 - Latest version for Vaadin Framework 7
  - Basic support for component context menu everywhere
  - Basic code examples
  - Use ContextClickEvent API introduced in Vaadin 7.6
  
-### Version 2.0 - Latest version for Vaadin Framework 8
+### Version 2.0.0 - Latest version for Vaadin Framework 8
  - Support for Vaadin Framework 8
  - Renamed the groupId to `com.vaadin` from `com.vaadin.addon
  - Renamed the packaging to `com.vaadin.contextmenu` from `com.vaadin.addon.contextmenu`
@@ -35,7 +39,7 @@ To see the demo, navigate to http://localhost:8080/
 
 ### Future plans
 - Unify ContextMenu with MenuBar API
-- Integrate into framework
+- Support downloads and window opening from the menu items
 
 ## Issue tracking
 
