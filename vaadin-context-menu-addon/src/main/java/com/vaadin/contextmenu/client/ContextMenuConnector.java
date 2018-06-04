@@ -38,7 +38,6 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
     @Override
     public void onStateChanged(StateChangeEvent stateChangeEvent) {
         super.onStateChanged(stateChangeEvent);
-
         contextMenuWidget.clearItems();
         addMenuItemsFromState(contextMenuWidget, getState().menuItems);
     }
@@ -176,6 +175,9 @@ public class ContextMenuConnector extends AbstractExtensionConnector {
 
     private void showMenu(int eventX, int eventY) {
         CustomMenuItem firstItem = dummyRootMenuBar.getItems().get(0);
+        if(contextMenuWidget.getItems().size()==0){
+            return;
+        }
         dummyRootMenuBar.setSelected(firstItem);
         dummyRootMenuBar.showChildMenuAt(firstItem, eventY, eventX);
     }
