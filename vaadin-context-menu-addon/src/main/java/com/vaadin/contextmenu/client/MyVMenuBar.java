@@ -186,7 +186,7 @@ public class MyVMenuBar extends VMenuBar {
                     setSelected(items.get(items.size() - 1));
                 }
 
-                if (!getSelected().isSelectable()) {
+                if (!getSelected().isSelectable() || !getSelected().isEnabled()) {
                     handleNavigation(keycode, ctrl, shift);
                 }
             }
@@ -214,7 +214,7 @@ public class MyVMenuBar extends VMenuBar {
                     setSelected(items.get(0));
                 }
 
-                if (!getSelected().isSelectable()) {
+                if (!getSelected().isSelectable() || !getSelected().isEnabled()) {
                     handleNavigation(keycode, ctrl, shift);
                 }
             }
