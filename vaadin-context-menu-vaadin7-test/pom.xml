@@ -5,12 +5,12 @@
     <groupId>com.vaadin</groupId>
     <artifactId>vaadin-context-menu-vaadin7-test</artifactId>
     <packaging>war</packaging>
-    <version>2.1-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
     <name>Vaadin ContextMenu Test for Vaadin 7 component compatibility</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>8.5-SNAPSHOT</vaadin.version>
+        <vaadin.version>8.6-SNAPSHOT</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
     </properties>
 
