@@ -1,8 +1,5 @@
 package com.vaadin.contextmenu;
 
-import java.io.Serializable;
-import java.util.EventListener;
-
 import com.vaadin.contextmenu.ContextMenu.ContextMenuOpenListener.ContextMenuOpenEvent;
 import com.vaadin.contextmenu.GridContextMenu.GridContextMenuOpenListener.GridContextMenuOpenEvent;
 import com.vaadin.shared.ui.grid.GridConstants.Section;
@@ -21,14 +18,13 @@ public class GridContextMenu<T> extends ContextMenu {
             final GridContextMenuOpenListener<T> listener) {
         addContextMenuOpenListener((final ContextMenuOpenEvent event) -> {
             if (event
-                    .getContextClickEvent() instanceof GridContextClickEvent) {
+                    .getContextClickEvent() instanceof Grid.GridContextClickEvent) {
                 @SuppressWarnings("unchecked")
                 GridContextClickEvent<T> gridEvent = (GridContextClickEvent<T>) event
                         .getContextClickEvent();
                 if (gridEvent.getSection() == section) {
-                    listener.onContextMenuOpen(
-                            new GridContextMenuOpenEvent<>(
-                                    GridContextMenu.this, gridEvent));
+                    listener.onContextMenuOpen(new GridContextMenuOpenEvent<>(
+                            GridContextMenu.this, gridEvent));
                 }
             }
         });
@@ -50,7 +46,7 @@ public class GridContextMenu<T> extends ContextMenu {
     }
 
     public interface GridContextMenuOpenListener<T>
-            extends EventListener, Serializable {
+            extends java.util.EventListener, java.io.Serializable {
 
         public void onContextMenuOpen(GridContextMenuOpenEvent<T> event);
 

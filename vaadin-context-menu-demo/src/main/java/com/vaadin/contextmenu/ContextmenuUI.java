@@ -6,9 +6,11 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.contextmenu.ContextMenu.ContextMenuOpenListener;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -25,6 +27,7 @@ public class ContextmenuUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {
+
         final VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
         setContent(layout);
@@ -52,47 +55,54 @@ public class ContextmenuUI extends UI {
         layout.addComponent(new GridWithGenericListener());
         layout.addComponent(new GridWithGridListener());
         layout.addComponent(but3);
-        layout.addComponent(new Button("Remove items from context menu", e->{ contextMenu.removeItems();}));
+        layout.addComponent(new Button("Remove items from context menu", e-> contextMenu.removeItems()));
     }
 
-    private void fillMenu(Menu menu) {
-        final MenuItem item = menu.addItem("Checkable", e -> {
-            Notification.show("checked: " + e.isChecked());
-        });
+    private void fillMenu(ContextMenu menu) {
+        final MenuItem item = menu.addItem("Checkable",
+                e -> Notification.show("checked: " + e.isChecked())
+        );
         item.setCheckable(true);
         item.setChecked(true);
 
-        MenuItem item2 = menu.addItem("Disabled", e -> {
-            Notification.show("disabled");
-        });
+        MenuItem item2 = menu.addItem("Disabled",
+                e -> Notification.show("disabled")
+        );
         item2.setDescription("Disabled item");
         item2.setEnabled(false);
 
-        MenuItem item3 = menu.addItem("Invisible", e -> {
-            Notification.show("invisible");
-        });
+        MenuItem item3 = menu.addItem("Invisible",
+                e -> Notification.show("invisible")
+        );
         item3.setVisible(false);
 
-        if (menu instanceof ContextMenu) {
-            ((ContextMenu) menu).addSeparator();
-        }
+        menu.addSeparator();
 
-        MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>", e -> {
-            Notification.show("icon");
-        });
+        MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>",
+                e -> Notification.show("icon")
+        );
         item4.setIcon(VaadinIcons.ADJUST);
         item4.setDescription("Test tooltip");
         but3.addClickListener(e->item4.setDescription(""));
-        MenuItem item5 = menu.addItem("Custom stylename", e -> {
-            Notification.show("stylename");
-        });
+        MenuItem item5 = menu.addItem("Custom stylename",
+                e -> Notification.show("stylename")
+        );
         item5.setStyleName("teststyle");
 
-        MenuItem item6 = menu.addItem("Submenu", e -> {
-        });
+        MenuItem item6 = menu.addItem("Submenu");
         item6.addItem("Subitem", e -> Notification.show("SubItem"));
         item6.addSeparator();
         item6.addItem("Subitem", e -> Notification.show("SubItem"))
                 .setDescription("Test");
+        MenuItem openWindowNotification = item6.addItem(
+                "Open Window + Notification",
+                e -> Notification.show("Open Vaadin.com"));
+        new BrowserWindowOpener("https://vaadin.com").extend(openWindowNotification);
+
+        MenuItem openWindowDummy = item6.addItem("Open Google");
+        new BrowserWindowOpener("https://google.com").extend(openWindowDummy);
+
+        new BrowserWindowOpener("https://yahoo.com")
+                .extend(item6.addItem("SubMenu2").addItem("Yahoo!"));
     }
 }
