@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.contextmenu.ContextMenu.ContextMenuOpenListener;
+import com.vaadin.data.TreeData;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.VaadinRequest;
@@ -12,13 +13,14 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Tree;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings({"serial", "unchecked"})
 @Theme("contextmenu")
 public class ContextMenuUI extends UI {
-    Button but3 = new Button("remove Tooltip");
+    private Button but3 = new Button("remove Tooltip");
 
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = ContextMenuUI.class)
@@ -44,18 +46,33 @@ public class ContextMenuUI extends UI {
         contextMenu.setAsContextMenuOf(button);
         contextMenu.setAsContextMenuOf(button2);
 
-        contextMenu.addContextMenuOpenListener(new ContextMenuOpenListener() {
-            @Override
-            public void onContextMenuOpen(ContextMenuOpenEvent event) {
-                Notification.show("Context menu on"
-                        + event.getSourceComponent().getCaption());
-            }
-        });
+        contextMenu.addContextMenuOpenListener(
+                (ContextMenuOpenListener) event ->
+                        Notification.show("Context menu on" + event.getSourceComponent().getCaption()));
         contextMenu.setHtmlContentAllowed(true);
         layout.addComponent(new GridWithGenericListener());
         layout.addComponent(new GridWithGridListener());
         layout.addComponent(but3);
         layout.addComponent(new Button("Remove items from context menu", e -> contextMenu.removeItems()));
+        addTree(layout);
+    }
+
+    private void addTree(VerticalLayout layout) {
+        TreeData<String> data = new TreeData<>();
+        data.addItem(null, "Dad");
+        data.addItem("Dad", "Daughter");
+        data.addItem("Daughter", "Granddaughter");
+        data.addItem("Dad", "Son");
+        data.addItem("Daughter", "Grandson");
+
+        Tree<String> tree = new Tree<>("A family", data);
+        TreeContextMenu<String> treeContextMenu = new TreeContextMenu<>(tree);
+        treeContextMenu.addTreeContextMenuListener(e -> {
+            treeContextMenu.removeItems();
+            treeContextMenu.addItem("Who?", menuItem -> Notification.show(e.getItem()));
+        });
+
+        layout.addComponent(tree);
     }
 
     private void fillMenu(ContextMenu menu) {
