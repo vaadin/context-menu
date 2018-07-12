@@ -15,13 +15,13 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings({ "serial", "unchecked" })
+@SuppressWarnings({"serial", "unchecked"})
 @Theme("contextmenu")
-public class ContextmenuUI extends UI {
-    Button but3=new Button("remove Tooltip");
+public class ContextMenuUI extends UI {
+    Button but3 = new Button("remove Tooltip");
 
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class)
+    @VaadinServletConfiguration(productionMode = false, ui = ContextMenuUI.class)
     public static class Servlet extends VaadinServlet {
     }
 
@@ -51,15 +51,15 @@ public class ContextmenuUI extends UI {
                         + event.getSourceComponent().getCaption());
             }
         });
-
+        contextMenu.setHtmlContentAllowed(true);
         layout.addComponent(new GridWithGenericListener());
         layout.addComponent(new GridWithGridListener());
         layout.addComponent(but3);
-        layout.addComponent(new Button("Remove items from context menu", e-> contextMenu.removeItems()));
+        layout.addComponent(new Button("Remove items from context menu", e -> contextMenu.removeItems()));
     }
 
     private void fillMenu(ContextMenu menu) {
-        final MenuItem item = menu.addItem("Checkable",
+        final MenuItem item = menu.addItem("Checkable \u00d6",
                 e -> Notification.show("checked: " + e.isChecked())
         );
         item.setCheckable(true);
@@ -83,7 +83,7 @@ public class ContextmenuUI extends UI {
         );
         item4.setIcon(VaadinIcons.ADJUST);
         item4.setDescription("Test tooltip");
-        but3.addClickListener(e->item4.setDescription(""));
+        but3.addClickListener(e -> item4.setDescription(""));
         MenuItem item5 = menu.addItem("Custom stylename",
                 e -> Notification.show("stylename")
         );
