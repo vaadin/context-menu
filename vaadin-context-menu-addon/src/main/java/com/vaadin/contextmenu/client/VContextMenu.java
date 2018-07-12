@@ -16,11 +16,14 @@
 
 package com.vaadin.contextmenu.client;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.vaadin.client.ui.VMenuBar;
 import com.vaadin.client.ui.VOverlay;
+
+import java.util.List;
 
 public class VContextMenu extends VMenuBar {
 
@@ -35,9 +38,20 @@ public class VContextMenu extends VMenuBar {
     public VContextMenu() {
     }
 
-    public void showRootMenuAt(CustomMenuItem item, int top, int left) {
-        super.showChildMenuAt(item, top, left);
-        currentVisibleContextMenu = this;
+    public void showRootMenu(int x, int y) {
+        if (currentVisibleContextMenu != null) {
+            Scheduler.get().scheduleDeferred(() -> showRootMenu(x,y));
+        } else {
+            CustomMenuItem rootItem = items.get(0);
+            VMenuBar rootSubMenu = rootItem.getSubMenu();
+            List<CustomMenuItem> items = rootSubMenu.getItems();
+            if (!items.isEmpty()) {
+                setSelected(rootItem);
+                currentVisibleContextMenu = this;
+                super.showChildMenuAt(rootItem, y, x);
+                rootSubMenu.setSelected(items.get(0));
+            }
+        }
     }
 
     @Override

@@ -30,7 +30,6 @@ import com.vaadin.shared.ui.ComponentStateUtil;
 import com.vaadin.shared.ui.Connect;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Stack;
 
 @Connect(ContextMenu.class)
@@ -55,6 +54,7 @@ public class ContextMenuConnector extends AbstractExtensionConnector
     protected void updateFromState(ContextMenuState state) {
 
         contextMenu.enabled = state.enabled;
+        contextMenu.htmlContentAllowed = state.htmlContentAllowed;
 
         if (null != getState()
                 && !ComponentStateUtil.isUndefinedWidth(getState())) {
@@ -92,7 +92,7 @@ public class ContextMenuConnector extends AbstractExtensionConnector
             Iterator<ContextMenuItemState> itr = state.menuItems.iterator();
             while (itr.hasNext()) {
                 ContextMenuItemState menuItemState = itr.next();
-                VMenuBar.CustomMenuItem currentItem = null;
+                VMenuBar.CustomMenuItem currentItem;
 
                 boolean itemHasCommand = menuItemState.command;
                 boolean itemIsCheckable = menuItemState.checkable;
@@ -190,7 +190,6 @@ public class ContextMenuConnector extends AbstractExtensionConnector
     protected void init() {
         super.init();
         contextMenu = GWT.create(VContextMenu.class);
-
         contextMenu.connector = this;
         contextMenuRoot = contextMenu.addItem("", null);
         contextMenuRoot.setSubMenu(new VContextMenu(true, contextMenu));
@@ -198,13 +197,7 @@ public class ContextMenuConnector extends AbstractExtensionConnector
         registerRpc(ContextMenuClientRpc.class, new ContextMenuClientRpc() {
             @Override
             public void showContextMenu(int x, int y) {
-
-                VContextMenu rootSubMenu = (VContextMenu) contextMenuRoot
-                        .getSubMenu();
-                List<VMenuBar.CustomMenuItem> items = rootSubMenu.getItems();
-                contextMenu.setSelected(contextMenuRoot);
-                contextMenu.showRootMenuAt(contextMenuRoot, y, x);
-                rootSubMenu.setSelected(items.get(0));
+                contextMenu.showRootMenu(x, y);
             }
         });
 
