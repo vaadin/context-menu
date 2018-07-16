@@ -136,15 +136,6 @@ public class ContextMenu extends AbstractExtension {
             itemById = new HashMap<>();
             menuSharedState.menuItems = convertItemsToState(getItems(),
                     itemById);
-            ContextMenuItemState moreItemState = new ContextMenuItemState();
-
-            MenuItem more = innerMenuBar.getMoreMenuItem();
-            moreItemState.text = more.getText();
-
-            moreItemState.icon = ResourceReference.create(more.getIcon(), this,
-                    "");
-            menuSharedState.moreItem = moreItemState;
-
         }
     }
 

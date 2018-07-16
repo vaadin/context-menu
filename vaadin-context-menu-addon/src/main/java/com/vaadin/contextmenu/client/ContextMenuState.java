@@ -29,5 +29,4 @@ public class ContextMenuState extends AbstractComponentState {
 
     public List<ContextMenuItemState> menuItems;
 
-    public ContextMenuItemState moreItem;
 }

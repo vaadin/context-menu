@@ -23,7 +23,6 @@ import com.vaadin.client.HasWidget;
 import com.vaadin.client.ServerConnector;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
-import com.vaadin.client.ui.Icon;
 import com.vaadin.client.ui.VMenuBar;
 import com.vaadin.contextmenu.ContextMenu;
 import com.vaadin.shared.ui.ComponentStateUtil;
@@ -55,34 +54,6 @@ public class ContextMenuConnector extends AbstractExtensionConnector
 
         contextMenu.enabled = state.enabled;
         contextMenu.htmlContentAllowed = state.htmlContentAllowed;
-
-        if (null != getState()
-                && !ComponentStateUtil.isUndefinedWidth(getState())) {
-            StringBuilder itemHTML = new StringBuilder();
-            ContextMenuItemState moreItemState = state.moreItem;
-            if (moreItemState.icon != null) {
-                Icon icon = getConnection()
-                        .getIcon(moreItemState.icon.getURL());
-                if (icon != null) {
-                    itemHTML.append(icon.getElement().getString());
-                }
-            }
-
-            String moreItemText = moreItemState.text;
-            if (moreItemText == null || "".equals(moreItemText)) {
-                moreItemText = "&#x25BA;";
-            }
-            itemHTML.append(moreItemText);
-
-            contextMenu.moreItem = GWT.create(VMenuBar.CustomMenuItem.class);
-            contextMenu.moreItem.setHTML(itemHTML.toString());
-            contextMenu.moreItem.setCommand(VMenuBar.emptyCommand);
-
-            contextMenu.collapsedRootItems = new VMenuBar(true, contextMenu);
-            contextMenu.moreItem.setSubMenu(contextMenu.collapsedRootItems);
-            contextMenu.moreItem.addStyleName(
-                    contextMenu.getStylePrimaryName() + "-more-menuitem");
-        }
 
         Stack<Iterator<ContextMenuItemState>> iteratorStack = new Stack<>();
         Stack<VMenuBar> menuStack = new Stack<>();
