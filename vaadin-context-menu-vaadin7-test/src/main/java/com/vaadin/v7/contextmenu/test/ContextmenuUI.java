@@ -24,7 +24,7 @@ public class ContextmenuUI extends UI {
     private static final String SHOE_SIZE = "Shoe size";
 
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class, widgetset = "com.vaadin.contextmenu.demo.DemoWidgetSet")
+    @VaadinServletConfiguration(productionMode = false, ui = ContextmenuUI.class)
     public static class Servlet extends VaadinServlet {
     }
 

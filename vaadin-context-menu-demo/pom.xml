@@ -5,12 +5,12 @@
     <groupId>com.vaadin</groupId>
     <artifactId>vaadin-context-menu-demo</artifactId>
     <packaging>war</packaging>
-    <version>2.1-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
     <name>Vaadin ContextMenu Demo</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>8.5-SNAPSHOT</vaadin.version>
+        <vaadin.version>8.6-SNAPSHOT</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version>
     </properties>

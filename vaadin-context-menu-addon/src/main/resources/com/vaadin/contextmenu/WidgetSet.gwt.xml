@@ -1,12 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.1//EN"
+		"http://www.gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module>
 
-	<!-- WS Compiler: manually edited -->
+<!-- WS Compiler: manually edited -->
 
 	<!-- Inherit DefaultWidgetSet -->
 	<inherits name="com.vaadin.DefaultWidgetSet" /> 
-
-	<replace-with class="com.vaadin.contextmenu.client.VMenuItem">
-		<when-type-is class="com.vaadin.client.ui.VMenuBar.CustomMenuItem"/>
-	</replace-with>
 
 </module>

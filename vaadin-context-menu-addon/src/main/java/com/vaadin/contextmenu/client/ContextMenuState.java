@@ -16,8 +16,17 @@
 
 package com.vaadin.contextmenu.client;
 
-import com.vaadin.shared.communication.ServerRpc;
+import com.vaadin.shared.AbstractComponentState;
 
-public interface ContextMenuServerRpc extends ServerRpc {
-    void itemClicked(int itemId);
+import java.util.List;
+
+public class ContextMenuState extends AbstractComponentState {
+    {
+        primaryStyleName = "v-context-menubar";
+    }
+
+    public boolean htmlContentAllowed;
+
+    public List<ContextMenuItemState> menuItems;
+
 }
