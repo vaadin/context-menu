@@ -32,7 +32,7 @@ To see the demo, navigate to http://localhost:8080/
  - Numerous bugfixes
  
  
-### Version 2.1.0 - Context Menu for Vaadin Framework 8 for Vaadin Framework 8
+### Version 2.1.0 - Context Menu for Vaadin Framework 8
  - Bugfixes
  - HTML tooltips support
  
