@@ -22,7 +22,7 @@ To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
 
-### Version 3.0.0 - Latest version for Vaadin Framework 8
+### Version 3.0.0.beta1 - Preliminary version for Vaadin Framework 8
  The context menu was rewritten from scratch, but API was kept compatible with version 2.x.
  Required Framework version is 8.6+. Key improvements are:
  - Tree context click support
@@ -30,9 +30,8 @@ To see the demo, navigate to http://localhost:8080/
  - FileDownloader support for menu items, i.e. now it's possible to download files by clicking menu items  
  - HTML format for items is implemented
  - Numerous bugfixes
- 
- 
-### Version 2.1.0 - Context Menu for Vaadin Framework 8
+
+### Version 2.1.0.beta1 - Preliminary version for Vaadin Framework 8
  - Bugfixes
  - HTML tooltips support
  
