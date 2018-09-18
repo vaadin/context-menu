@@ -1,3 +1,6 @@
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/vaadin-contextmenu)
+[![Stars on Vaadin Directory](https://img.shields.io/vaadin-directory/star/vaadin-contextmenu.svg)](https://vaadin.com/directory/component/vaadin-contextmenu)
+
 # Vaadin ContextMenu Add-on 
 
 Vaadin ContextMenu is an UI component add-on for [Vaadin Framework](https://github.com/vaadin/framework).
