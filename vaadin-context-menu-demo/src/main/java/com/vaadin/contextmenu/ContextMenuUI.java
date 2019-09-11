@@ -10,6 +10,8 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.ClassResource;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
@@ -27,10 +29,10 @@ public class ContextMenuUI extends UI {
     public static class Servlet extends VaadinServlet {
     }
 
+    final VerticalLayout layout = new VerticalLayout();
     @Override
     protected void init(VaadinRequest request) {
 
-        final VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
         setContent(layout);
 
@@ -95,19 +97,24 @@ public class ContextMenuUI extends UI {
 
         menu.addSeparator();
 
-        MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>",
+        //The path is /resources/images/cat.jpg
+        ClassResource ico = new ClassResource("/images/kitten.jpg");
+        MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>",ico,
                 e -> Notification.show("icon")
         );
-        item4.setIcon(VaadinIcons.ADJUST);
         item4.setDescription("Test tooltip");
         but3.addClickListener(e -> item4.setDescription(""));
         MenuItem item5 = menu.addItem("Custom stylename",
                 e -> Notification.show("stylename")
         );
+        //The path is /webapp/VAADIN/themes/contextmenu/images
+        ThemeResource resource = new ThemeResource("images/cat.jpg");
+        item5.setIcon(resource);
+
         item5.setStyleName("teststyle");
 
         MenuItem item6 = menu.addItem("Submenu");
-        item6.addItem("Subitem", e -> Notification.show("SubItem"));
+        item6.addItem("Subitem", VaadinIcons.OPTION, e -> Notification.show("SubItem"));
         item6.addSeparator();
         item6.addItem("Subitem", e -> Notification.show("SubItem"))
                 .setDescription("Test");
