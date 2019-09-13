@@ -71,7 +71,9 @@ public class ContextMenuUI extends UI {
         TreeContextMenu<String> treeContextMenu = new TreeContextMenu<>(tree);
         treeContextMenu.addTreeContextMenuListener(e -> {
             treeContextMenu.removeItems();
-            treeContextMenu.addItem("Who?", menuItem -> Notification.show(e.getItem()));
+            //The path is /resources/images/kitten.jpg
+            ClassResource ico = new ClassResource("/images/kitten.jpg");
+            treeContextMenu.addItem("Who?",ico, menuItem -> Notification.show(e.getItem()));
         });
 
         layout.addComponent(tree);
@@ -97,7 +99,7 @@ public class ContextMenuUI extends UI {
 
         menu.addSeparator();
 
-        //The path is /resources/images/cat.jpg
+        //The path is /resources/images/kitten.jpg
         ClassResource ico = new ClassResource("/images/kitten.jpg");
         MenuItem item4 = menu.addItem("Icon + Description + <b>HTML</b>",ico,
                 e -> Notification.show("icon")
