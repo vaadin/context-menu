@@ -25,6 +25,7 @@ import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.event.ContextClickEvent.ContextClickNotifier;
 import com.vaadin.server.AbstractExtension;
+import com.vaadin.server.ConnectorResource;
 import com.vaadin.server.Extension;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ResourceReference;
@@ -170,8 +171,12 @@ public class ContextMenu extends AbstractExtension {
                     .getDescriptionContentMode();
             menuItemState.enabled = item.isEnabled();
             menuItemState.separator = item.isSeparator();
-            menuItemState.icon = ResourceReference.create(item.getIcon(), this,
-                    "");
+            String key="icon";
+            ResourceReference resourceReference = ResourceReference.create(item.getIcon(), this, key);
+            if (item.getIcon()!=null && (item.getIcon() instanceof ConnectorResource)) {
+                super.getState().resources.put(key,resourceReference);
+            }
+            menuItemState.icon = resourceReference;
             menuItemState.styleName = item.getStyleName();
 
             menuItemState.childItems = convertItemsToState(item.getChildren(),
