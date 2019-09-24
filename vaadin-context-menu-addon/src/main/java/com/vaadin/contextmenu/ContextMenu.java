@@ -171,7 +171,9 @@ public class ContextMenu extends AbstractExtension {
                     .getDescriptionContentMode();
             menuItemState.enabled = item.isEnabled();
             menuItemState.separator = item.isSeparator();
-            String key="icon";
+            String key= item.getIcon()!= null ?
+                    String.valueOf(item.getIcon().hashCode())
+                    : "icon";
             ResourceReference resourceReference = ResourceReference.create(item.getIcon(), this, key);
             if (item.getIcon()!=null && (item.getIcon() instanceof ConnectorResource)) {
                 super.getState().resources.put(key,resourceReference);
