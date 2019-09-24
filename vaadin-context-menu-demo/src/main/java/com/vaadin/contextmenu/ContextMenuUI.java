@@ -86,7 +86,7 @@ public class ContextMenuUI extends UI {
         item.setCheckable(true);
         item.setChecked(true);
 
-        MenuItem item2 = menu.addItem("Disabled",
+        MenuItem item2 = menu.addItem("Disabled",new ClassResource("/images/tiger.jpg"),
                 e -> Notification.show("disabled")
         );
         item2.setDescription("Disabled item");
@@ -118,7 +118,7 @@ public class ContextMenuUI extends UI {
         MenuItem item6 = menu.addItem("Submenu");
         item6.addItem("Subitem", VaadinIcons.OPTION, e -> Notification.show("SubItem"));
         item6.addSeparator();
-        item6.addItem("Subitem", e -> Notification.show("SubItem"))
+        item6.addItem("Subitem",new ThemeResource("images/cat2.jpg"), e -> Notification.show("SubItem"))
                 .setDescription("Test");
         MenuItem openWindowNotification = item6.addItem(
                 "Open Window + Notification",
