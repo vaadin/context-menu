@@ -24,7 +24,7 @@ import com.vaadin.contextmenu.client.ContextMenuState;
 import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.event.ContextClickEvent.ContextClickNotifier;
-import com.vaadin.event.SerializableEventListener
+import com.vaadin.event.SerializableEventListener;
 import com.vaadin.server.AbstractExtension;
 import com.vaadin.server.ConnectorResource;
 import com.vaadin.server.Extension;
