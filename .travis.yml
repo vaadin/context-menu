@@ -12,7 +12,7 @@ cache:
 before_cache:
   - rm -rf $HOME/.m2/repository/com/vaadin/addon
 script:
-  - mvn -B -e -V clean verify
+  - mvn -B -e -V clean install
 env:
   global:
   - secure: KWHu7lGaBFY6DmiIwRH8uftetozH+GUgbAjrGno6ASzNzdZtyhqEac1OybnWvDHgKsFLjNHzlm0OeFb1QDOJQKH2U9pt2KFHsG8fEIYKDKFu8sARSmOy/dfYS5EDGIZdbyexE1RO4k6SCDXUcB18myAraSCUZAaojr8wIT7cdYZZNYCqbWYW6ZfM1OcMRMFL6RFJYoQSBzvvHzDwjY4tra0Aqcd5pt+laCIyuHZCLuamFe+2qjHishbSLrjBjsfNqI7WsEl0filG9ViioAhWkA7JBpzaJTegMkeiw22WAKl76BqgfKXsp31vcI6K8e/Uk4rWiRmb5YSWTyr8dsnV/Fwq1POTrWhzKXS8yY3QDyb6OE6ow7ffOhZjoXM+gMVMy93DnEjDX+EbJgKHho8B0EYi4Ys2BpJWerGUYe4JeATJFbyzDE9a7nskCYJwiyLUrSzYrrE7WMQFCrjDSoBxgRxuqiYdsvPkh9GBrtalab6bQcqG0x+eMYYmiVnHwoiUYraOEDxR3EgqGCSzEFobbtcu2l5/mIPVGz6o0r78FIYwmrYCss/9GIN9SVaHFv/y833RQGpyAA85smDZEveQ2z/6IFyHkpU0Xj6k9ndlM34r4QFmPUg7MvRihzMGr/8rlgOGOg+HRLojggMunOhHSE1IXJVccZUoTKdxS58qWZU=
