@@ -21,6 +21,7 @@ import com.vaadin.contextmenu.client.ContextMenuClientRpc;
 import com.vaadin.contextmenu.client.ContextMenuItemState;
 import com.vaadin.contextmenu.client.ContextMenuServerRpc;
 import com.vaadin.contextmenu.client.ContextMenuState;
+import com.vaadin.event.ConnectorEventListener;
 import com.vaadin.event.ContextClickEvent;
 import com.vaadin.event.ContextClickEvent.ContextClickListener;
 import com.vaadin.event.ContextClickEvent.ContextClickNotifier;
@@ -246,7 +247,7 @@ public class ContextMenu extends AbstractExtension {
         return getState(false).htmlContentAllowed;
     }
 
-    public interface ContextMenuOpenListener extends SerializableEventListener {
+    public interface ContextMenuOpenListener extends ConnectorEventListener {
 
         public static final Method MENU_OPENED = ReflectTools.findMethod(
                 ContextMenuOpenListener.class, "onContextMenuOpen",
