@@ -17,6 +17,7 @@
 package com.vaadin.contextmenu;
 
 import com.vaadin.contextmenu.ContextMenu.ContextMenuOpenListener.ContextMenuOpenEvent;
+import com.vaadin.event.SerializableEventListener;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.Tree.TreeContextClickEvent;
 
@@ -41,7 +42,7 @@ public class TreeContextMenu<T> extends ContextMenu {
     }
 
     public interface TreeContextMenuOpenListener<T>
-            extends java.util.EventListener, java.io.Serializable {
+            extends SerializableEventListener {
 
         public void onContextMenuOpen(TreeContextMenuOpenEvent<T> event);
 

@@ -62,7 +62,7 @@ public class GridContextMenu<T> extends ContextMenu {
     }
 
     public interface GridContextMenuOpenListener<T>
-            extends java.util.EventListener, java.io.Serializable {
+            extends com.vaadin.event.SerializableEventListener {
 
         public void onContextMenuOpen(GridContextMenuOpenEvent<T> event);
 
