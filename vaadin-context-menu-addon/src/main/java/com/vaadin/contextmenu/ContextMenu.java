@@ -247,7 +247,7 @@ public class ContextMenu extends AbstractExtension {
         return getState(false).htmlContentAllowed;
     }
 
-    public interface ContextMenuOpenListener extends ConnectorEventListener {
+    public interface ContextMenuOpenListener extends com.vaadin.event.ConnectorEventListener {
 
         public static final Method MENU_OPENED = ReflectTools.findMethod(
                 ContextMenuOpenListener.class, "onContextMenuOpen",

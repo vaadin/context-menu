@@ -18,7 +18,6 @@ package com.vaadin.contextmenu;
 
 import com.vaadin.contextmenu.ContextMenu.ContextMenuOpenListener.ContextMenuOpenEvent;
 import com.vaadin.contextmenu.GridContextMenu.GridContextMenuOpenListener.GridContextMenuOpenEvent;
-import com.vaadin.event.SerializableEventListener;
 import com.vaadin.shared.ui.grid.GridConstants.Section;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.Column;
@@ -63,7 +62,7 @@ public class GridContextMenu<T> extends ContextMenu {
     }
 
     public interface GridContextMenuOpenListener<T>
-            extends SerializableEventListener {
+            extends com.vaadin.event.SerializableEventListener {
 
         public void onContextMenuOpen(GridContextMenuOpenEvent<T> event);
 
