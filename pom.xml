@@ -8,9 +8,13 @@
 	<version>0.8-SNAPSHOT</version>
 	<name>Vaadin ContextMenu Root Project</name>
 
+	<properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
+
 	<modules>
 		<module>vaadin-context-menu-addon</module>
 		<module>vaadin-context-menu-demo</module>
 	</modules>
-
 </project>
